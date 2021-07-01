@@ -1,0 +1,3930 @@
+Index: src/main/java/com/ar/dao/CustomerDAO.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/ar/dao/CustomerDAO.java b/src/main/java/com/ar/dao/CustomerDAO.java
+new file mode 100644
+--- /dev/null	(date 1624863345460)
++++ b/src/main/java/com/ar/dao/CustomerDAO.java	(date 1624863345460)
+@@ -0,0 +1,18 @@
++package com.ar.dao;
++
++import com.ar.beans.Customer;
++import com.ar.exceptions.CouponSystemException;
++
++import java.sql.SQLException;
++import java.util.List;
++
++public interface CustomerDAO extends SystemDAO<Customer, Integer> {
++
++    boolean isCustomerExists(String email, String password) throws SQLException;
++    boolean isCustomerExists(String email) throws SQLException;
++    boolean isCustomerExists(String email, int id) throws SQLException;
++    int getCustomerIdByEmailPassword(String email, String password) throws SQLException;
++
++    List<Customer> getCustomersCupon(int couponID) throws SQLException, CouponSystemException;
++
++}
+Index: src/main/java/com/ar/utils/ArtUtils.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/ar/utils/ArtUtils.java b/src/main/java/com/ar/utils/ArtUtils.java
+new file mode 100644
+--- /dev/null	(date 1624855142915)
++++ b/src/main/java/com/ar/utils/ArtUtils.java	(date 1624855142915)
+@@ -0,0 +1,118 @@
++package com.ar.utils;
++
++public class ArtUtils {
++    public static final String INSERT = "" +
++            "██╗███╗   ██╗███████╗███████╗██████╗ ████████╗\n" +
++            "██║████╗  ██║██╔════╝██╔════╝██╔══██╗╚══██╔══╝\n" +
++            "██║██╔██╗ ██║███████╗█████╗  ██████╔╝   ██║   \n" +
++            "██║██║╚██╗██║╚════██║██╔══╝  ██╔══██╗   ██║   \n" +
++            "██║██║ ╚████║███████║███████╗██║  ██║   ██║   \n" +
++            "╚═╝╚═╝  ╚═══╝╚══════╝╚══════╝╚═╝  ╚═╝   ╚═╝   \n" +
++            "                                              ";
++    public static final String UPDATE = "" +
++            "██╗   ██╗██████╗ ██████╗  █████╗ ████████╗███████╗\n" +
++            "██║   ██║██╔══██╗██╔══██╗██╔══██╗╚══██╔══╝██╔════╝\n" +
++            "██║   ██║██████╔╝██║  ██║███████║   ██║   █████╗  \n" +
++            "██║   ██║██╔═══╝ ██║  ██║██╔══██║   ██║   ██╔══╝  \n" +
++            "╚██████╔╝██║     ██████╔╝██║  ██║   ██║   ███████╗\n" +
++            " ╚═════╝ ╚═╝     ╚═════╝ ╚═╝  ╚═╝   ╚═╝   ╚══════╝\n" +
++            "                                                  ";
++    public static final String DELETE = "" +
++            "██████╗ ███████╗██╗     ███████╗████████╗███████╗\n" +
++            "██╔══██╗██╔════╝██║     ██╔════╝╚══██╔══╝██╔════╝\n" +
++            "██║  ██║█████╗  ██║     █████╗     ██║   █████╗  \n" +
++            "██║  ██║██╔══╝  ██║     ██╔══╝     ██║   ██╔══╝  \n" +
++            "██████╔╝███████╗███████╗███████╗   ██║   ███████╗\n" +
++            "╚═════╝ ╚══════╝╚══════╝╚══════╝   ╚═╝   ╚══════╝\n" ;
++    public static final String GET_ALL = "" +
++            " ██████╗ ███████╗████████╗     █████╗ ██╗     ██╗     \n" +
++            "██╔════╝ ██╔════╝╚══██╔══╝    ██╔══██╗██║     ██║     \n" +
++            "██║  ███╗█████╗     ██║       ███████║██║     ██║     \n" +
++            "██║   ██║██╔══╝     ██║       ██╔══██║██║     ██║     \n" +
++            "╚██████╔╝███████╗   ██║       ██║  ██║███████╗███████╗\n" +
++            " ╚═════╝ ╚══════╝   ╚═╝       ╚═╝  ╚═╝╚══════╝╚══════╝\n" +
++            "                                                      " +
++            "";
++    public static final String GET_SINGLE = "" +
++            " ██████╗ ███████╗████████╗     ██████╗ ███╗   ██╗███████╗\n" +
++            "██╔════╝ ██╔════╝╚══██╔══╝    ██╔═══██╗████╗  ██║██╔════╝\n" +
++            "██║  ███╗█████╗     ██║       ██║   ██║██╔██╗ ██║█████╗  \n" +
++            "██║   ██║██╔══╝     ██║       ██║   ██║██║╚██╗██║██╔══╝  \n" +
++            "╚██████╔╝███████╗   ██║       ╚██████╔╝██║ ╚████║███████╗\n" +
++            " ╚═════╝ ╚══════╝   ╚═╝        ╚═════╝ ╚═╝  ╚═══╝╚══════╝\n" +
++            "                                                         ";
++
++    public static  final String UPS = "" +
++            "██╗   ██╗██████╗ ███████╗██╗\n" +
++            "██║   ██║██╔══██╗██╔════╝██║\n" +
++            "██║   ██║██████╔╝███████╗██║\n" +
++            "██║   ██║██╔═══╝ ╚════██║╚═╝\n" +
++            "╚██████╔╝██║     ███████║██╗\n" +
++            " ╚═════╝ ╚═╝     ╚══════╝╚═╝\n" +
++            "                            ";
++    public static  final String NEW = "" +
++            "███╗   ██╗███████╗██╗    ██╗██╗\n" +
++            "████╗  ██║██╔════╝██║    ██║██║\n" +
++            "██╔██╗ ██║█████╗  ██║ █╗ ██║██║\n" +
++            "██║╚██╗██║██╔══╝  ██║███╗██║╚═╝\n" +
++            "██║ ╚████║███████╗╚███╔███╔╝██╗\n" +
++            "╚═╝  ╚═══╝╚══════╝ ╚══╝╚══╝ ╚═╝\n" +
++            "                               ";
++    public static  final String COMPANY = "" +
++            " ██████╗ ██████╗ ███╗   ███╗██████╗  █████╗ ███╗   ██╗██╗   ██╗\n" +
++            "██╔════╝██╔═══██╗████╗ ████║██╔══██╗██╔══██╗████╗  ██║╚██╗ ██╔╝\n" +
++            "██║     ██║   ██║██╔████╔██║██████╔╝███████║██╔██╗ ██║ ╚████╔╝ \n" +
++            "██║     ██║   ██║██║╚██╔╝██║██╔═══╝ ██╔══██║██║╚██╗██║  ╚██╔╝  \n" +
++            "╚██████╗╚██████╔╝██║ ╚═╝ ██║██║     ██║  ██║██║ ╚████║   ██║   \n" +
++            " ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚═╝     ╚═╝  ╚═╝╚═╝  ╚═══╝   ╚═╝   ";
++
++    public static  final String CUSTOMER = "" +
++            " ██████╗██╗   ██╗███████╗████████╗ ██████╗ ███╗   ███╗███████╗██████╗ \n" +
++            "██╔════╝██║   ██║██╔════╝╚══██╔══╝██╔═══██╗████╗ ████║██╔════╝██╔══██╗\n" +
++            "██║     ██║   ██║███████╗   ██║   ██║   ██║██╔████╔██║█████╗  ██████╔╝\n" +
++            "██║     ██║   ██║╚════██║   ██║   ██║   ██║██║╚██╔╝██║██╔══╝  ██╔══██╗\n" +
++            "╚██████╗╚██████╔╝███████║   ██║   ╚██████╔╝██║ ╚═╝ ██║███████╗██║  ██║\n" +
++            " ╚═════╝ ╚═════╝ ╚══════╝   ╚═╝    ╚═════╝ ╚═╝     ╚═╝╚══════╝╚═╝  ╚═╝";
++
++    public static  final String COUPON = "" +
++            " ██████╗ ██████╗ ██╗   ██╗██████╗  ██████╗ ███╗   ██╗\n" +
++            "██╔════╝██╔═══██╗██║   ██║██╔══██╗██╔═══██╗████╗  ██║\n" +
++            "██║     ██║   ██║██║   ██║██████╔╝██║   ██║██╔██╗ ██║\n" +
++            "██║     ██║   ██║██║   ██║██╔═══╝ ██║   ██║██║╚██╗██║\n" +
++            "╚██████╗╚██████╔╝╚██████╔╝██║     ╚██████╔╝██║ ╚████║\n" +
++            " ╚═════╝ ╚═════╝  ╚═════╝ ╚═╝      ╚═════╝ ╚═╝  ╚═══╝";
++
++    public static final String ADMIN_FACADE = "" +
++            " █████╗ ██████╗ ███╗   ███╗██╗███╗   ██╗    ███████╗ █████╗  ██████╗ █████╗ ██████╗ ███████╗\n" +
++            "██╔══██╗██╔══██╗████╗ ████║██║████╗  ██║    ██╔════╝██╔══██╗██╔════╝██╔══██╗██╔══██╗██╔════╝\n" +
++            "███████║██║  ██║██╔████╔██║██║██╔██╗ ██║    █████╗  ███████║██║     ███████║██║  ██║█████╗  \n" +
++            "██╔══██║██║  ██║██║╚██╔╝██║██║██║╚██╗██║    ██╔══╝  ██╔══██║██║     ██╔══██║██║  ██║██╔══╝  \n" +
++            "██║  ██║██████╔╝██║ ╚═╝ ██║██║██║ ╚████║    ██║     ██║  ██║╚██████╗██║  ██║██████╔╝███████╗\n" +
++            "╚═╝  ╚═╝╚═════╝ ╚═╝     ╚═╝╚═╝╚═╝  ╚═══╝    ╚═╝     ╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝╚═════╝ ╚══════╝";
++
++    public static final String COMPANY_FACADE = "" +
++            " ██████╗ ██████╗ ███╗   ███╗██████╗  █████╗ ███╗   ██╗██╗   ██╗    ███████╗ █████╗  ██████╗ █████╗ ██████╗ ███████╗\n" +
++            "██╔════╝██╔═══██╗████╗ ████║██╔══██╗██╔══██╗████╗  ██║╚██╗ ██╔╝    ██╔════╝██╔══██╗██╔════╝██╔══██╗██╔══██╗██╔════╝\n" +
++            "██║     ██║   ██║██╔████╔██║██████╔╝███████║██╔██╗ ██║ ╚████╔╝     █████╗  ███████║██║     ███████║██║  ██║█████╗  \n" +
++            "██║     ██║   ██║██║╚██╔╝██║██╔═══╝ ██╔══██║██║╚██╗██║  ╚██╔╝      ██╔══╝  ██╔══██║██║     ██╔══██║██║  ██║██╔══╝  \n" +
++            "╚██████╗╚██████╔╝██║ ╚═╝ ██║██║     ██║  ██║██║ ╚████║   ██║       ██║     ██║  ██║╚██████╗██║  ██║██████╔╝███████╗\n" +
++            " ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚═╝     ╚═╝  ╚═╝╚═╝  ╚═══╝   ╚═╝       ╚═╝     ╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝╚═════╝ ╚══════╝";
++
++    public static final String CUSTOMER_FACADE = "" +
++            " ██████╗██╗   ██╗███████╗████████╗ ██████╗ ███╗   ███╗███████╗██████╗     ███████╗ █████╗  ██████╗ █████╗ ██████╗ ███████╗\n" +
++            "██╔════╝██║   ██║██╔════╝╚══██╔══╝██╔═══██╗████╗ ████║██╔════╝██╔══██╗    ██╔════╝██╔══██╗██╔════╝██╔══██╗██╔══██╗██╔════╝\n" +
++            "██║     ██║   ██║███████╗   ██║   ██║   ██║██╔████╔██║█████╗  ██████╔╝    █████╗  ███████║██║     ███████║██║  ██║█████╗  \n" +
++            "██║     ██║   ██║╚════██║   ██║   ██║   ██║██║╚██╔╝██║██╔══╝  ██╔══██╗    ██╔══╝  ██╔══██║██║     ██╔══██║██║  ██║██╔══╝  \n" +
++            "╚██████╗╚██████╔╝███████║   ██║   ╚██████╔╝██║ ╚═╝ ██║███████╗██║  ██║    ██║     ██║  ██║╚██████╗██║  ██║██████╔╝███████╗\n" +
++            " ╚═════╝ ╚═════╝ ╚══════╝   ╚═╝    ╚═════╝ ╚═╝     ╚═╝╚══════╝╚═╝  ╚═╝    ╚═╝     ╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝╚═════╝ ╚══════╝";
++
++    public static final String DAILY_JOB = "" +
++            "██████╗  █████╗ ██╗██╗  ██╗   ██╗         ██╗ ██████╗ ██████╗ \n" +
++            "██╔══██╗██╔══██╗██║██║  ╚██╗ ██╔╝         ██║██╔═══██╗██╔══██╗\n" +
++            "██║  ██║███████║██║██║   ╚████╔╝          ██║██║   ██║██████╔╝\n" +
++            "██║  ██║██╔══██║██║██║    ╚██╔╝      ██   ██║██║   ██║██╔══██╗\n" +
++            "██████╔╝██║  ██║██║███████╗██║       ╚█████╔╝╚██████╔╝██████╔╝\n" +
++            "╚═════╝ ╚═╝  ╚═╝╚═╝╚══════╝╚═╝        ╚════╝  ╚═════╝ ╚═════╝ ";
++
++
++}
+Index: src/main/java/com/ar/job/CouponExpirationDailyJob.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/ar/job/CouponExpirationDailyJob.java b/src/main/java/com/ar/job/CouponExpirationDailyJob.java
+new file mode 100644
+--- /dev/null	(date 1625117001089)
++++ b/src/main/java/com/ar/job/CouponExpirationDailyJob.java	(date 1625117001089)
+@@ -0,0 +1,53 @@
++package com.ar.job;
++
++import com.ar.beans.Coupon;
++import com.ar.dao.CouponDAO;
++import com.ar.dao.CustomerCouponDao;
++import com.ar.dbdao.CouponDBDAO;
++import com.ar.dbdao.CustomerCouponDBDAO;
++import com.ar.utils.ArtUtils;
++import com.ar.utils.PrintUtils;
++
++import java.sql.Date;
++import java.sql.SQLException;
++import java.time.LocalDate;
++import java.util.List;
++
++public class CouponExpirationDailyJob implements Runnable {
++
++    private CouponDAO couponDAO = new CouponDBDAO();
++    private CustomerCouponDao customerCouponDao = new CustomerCouponDBDAO();
++    private boolean quit;
++    private static final int DAY = 1000 * 60 * 60 * 24;
++    private static final int SEC = 1000;
++    private static final int SEC05 = 500;
++    private static final int SEC03 = 300;
++
++    @Override
++    public void run() {
++        while (true) {
++            List<Coupon> expiredCoupons = null;
++            try {
++                PrintUtils.printTestHeader(ArtUtils.DAILY_JOB);
++                expiredCoupons = couponDAO.getAllExpiredCouponsByDate(Date.valueOf(LocalDate.now()));
++                System.out.println("Daily JOB, Expired coupuns amount = " + expiredCoupons.size());
++                for (Coupon c: expiredCoupons) {
++                    customerCouponDao.deleteCouponPurchase(c.getId());
++                    couponDAO.deleteEntity(c.getId());
++                }
++                //couponDAO.getAllEntities().forEach(System.out::println);
++                if (expiredCoupons.size() > 0)
++                    System.out.println("Daily Job, EXPIRED COUPONS DELETED");
++            } catch (SQLException throwables) {
++                System.out.println("JOB");
++                throwables.printStackTrace();
++            }
++
++            try {
++                Thread.sleep(SEC03);
++            } catch (InterruptedException e) {
++                e.printStackTrace();
++            }
++        }
++    }
++}
+Index: src/main/java/com/ar/db/ConnectionPool.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/ar/db/ConnectionPool.java b/src/main/java/com/ar/db/ConnectionPool.java
+new file mode 100644
+--- /dev/null	(date 1623659976469)
++++ b/src/main/java/com/ar/db/ConnectionPool.java	(date 1623659976469)
+@@ -0,0 +1,72 @@
++package com.ar.db;
++
++import com.ar.utils.DBUtils;
++
++import java.sql.Connection;
++import java.sql.DriverManager;
++import java.sql.SQLException;
++import java.util.Stack;
++
++public class ConnectionPool {
++    private static final int CONNECTION_POOL_SIZE = 10;
++    private static ConnectionPool instance;
++    private Stack<Connection> connections = new Stack<>();
++
++    private ConnectionPool() throws SQLException {
++        initializePool();
++    }
++
++    public static ConnectionPool getInstance() {
++
++        if (instance == null) {
++            synchronized (ConnectionPool.class) {
++                if (instance == null) {
++                    try {
++                        instance = new ConnectionPool();
++                    } catch (SQLException e) {
++                        System.out.println(e.getMessage());
++                    }
++                }
++
++            }
++        }
++        return instance;
++    }
++
++    private void initializePool() throws SQLException {
++        connections = new Stack<>();
++
++        for (int i = 0; i < CONNECTION_POOL_SIZE; i++) {
++            connections.push(DriverManager.getConnection(DBUtils.URL, DBUtils.USER, DBUtils.PASS));
++        }
++    }
++
++    public Connection getConnection() throws InterruptedException {
++
++        synchronized (connections) {
++            if(connections.isEmpty()) {
++                connections.wait();
++            }
++
++            return connections.pop();
++        }
++    }
++
++    public void restoreConnection(Connection connection) {
++        synchronized (connections) {
++            connections.push(connection);
++            connections.notify();
++        }
++    }
++
++    public void closeAllConnections() throws InterruptedException {
++        synchronized (connections) {
++            while(connections.size()<CONNECTION_POOL_SIZE) {
++                connections.wait();
++            }
++
++            connections.removeAllElements();
++        }
++    }
++
++}
+Index: src/main/java/com/ar/facades/CompanyFacade.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/ar/facades/CompanyFacade.java b/src/main/java/com/ar/facades/CompanyFacade.java
+new file mode 100644
+--- /dev/null	(date 1625116166208)
++++ b/src/main/java/com/ar/facades/CompanyFacade.java	(date 1625116166208)
+@@ -0,0 +1,104 @@
++package com.ar.facades;
++
++import com.ar.beans.Category;
++import com.ar.beans.Company;
++import com.ar.beans.Coupon;
++import com.ar.dbdao.IsExistsQuery;
++import com.ar.exceptions.CouponSystemException;
++import com.ar.exceptions.ErrorMsg;
++import com.ar.utils.TablePrinter;
++
++import java.sql.SQLException;
++import java.util.List;
++
++public class CompanyFacade extends ClientFacade{
++    private int companyID;
++
++    public int getCompanyID() {
++        return companyID;
++    }
++
++    public void setCompanyID(int companyID) {
++        this.companyID = companyID;
++    }
++
++    public CompanyFacade() {
++        super();
++    }
++
++    @Override
++    public boolean login(String email, String password) throws SQLException, CouponSystemException {
++        return this.companyDAO.isCompanyExists(IsExistsQuery.COMPANY_EMAIL_AND_PASSWORD, email,password);
++    }
++
++    public int getCompanyIdByEmailAndPassword(String email, String password) throws SQLException {
++        return this.companyDAO.getCompanyIdByEmailPassword(email, password);
++    }
++
++    public Company getCompanyDetails() throws SQLException, CouponSystemException {
++        return this.companyDAO.getOneEntity(this.companyID);
++    }
++
++    public  void addCoupon(Coupon coupon) throws SQLException, CouponSystemException {
++        if (this.companyDAO.isCouponExists(IsExistsQuery.COUPON_COMPANY_TITLE,this.companyID,coupon.getTitle()))
++            throw new CouponSystemException(ErrorMsg.COMPANY_COUPON_IS_EXISTS);
++
++        this.couponDAO.addEntity(coupon);
++    }
++
++    public  void updateCoupon(Coupon coupon) throws SQLException, CouponSystemException {
++        Coupon toUpdate = this.couponDAO.getOneEntity(coupon.getId());
++        if (toUpdate == null) {
++            throw new CouponSystemException(String.format( ErrorMsg.COUPON_ID_NOT_EXISTS.getMessage(),coupon.getId()));
++        }
++        if (toUpdate.getCompanyId() != coupon.getCompanyId()) {
++            throw new CouponSystemException(ErrorMsg.COUPON_COMPANY_ID_NOT_UPDATABLE);
++        }
++        if (this.companyDAO.isCouponExists(IsExistsQuery.COUPON_COMPANY_TITLE,this.companyID,coupon.getTitle())) {
++            throw new CouponSystemException(ErrorMsg.COMPANY_COUPON_IS_EXISTS);
++        }
++        this.couponDAO.updateEntity(coupon);
++    }
++
++    public List<Coupon> getCompanyCoupons() throws SQLException {
++        return  this.couponDAO.getCouponsCompany(this.companyID);
++    }
++
++    public Coupon getCompanyCoupon(int couponId) throws SQLException, CouponSystemException {
++        Coupon coupon = this.couponDAO.getOneEntity(couponId);
++        if (coupon.getCompanyId() != this.companyID)
++            throw new CouponSystemException(ErrorMsg.COUPON_COMPANY_ID_NOT_UPDATABLE);
++        return coupon;
++    }
++
++    public List<Coupon> getCompanyCoupons(Category category) throws SQLException {
++        return  this.couponDAO.getCouponsCompany(this.companyID, category);
++    }
++
++    public List<Coupon> getCompanyCoupons(double maxPrice) throws SQLException {
++
++        return  this.couponDAO.getCouponsCompanyPrice(this.companyID, maxPrice);
++    }
++
++    public void deleteCoupon(int couponId) throws SQLException, CouponSystemException {
++        Coupon coupon = null;
++        try {
++            coupon = this.couponDAO.getOneEntity(couponId);
++            if (coupon == null)
++                throw new CouponSystemException(ErrorMsg.COUPON_NOT_EXISTS);
++        } catch ( SQLException cse) {
++            throw new CouponSystemException(ErrorMsg.SQL_ERROR);
++        }
++
++        System.out.println("coupon to delete: ");
++        TablePrinter.print(coupon);
++        if (coupon.getCompanyId() == this.companyID) {
++            System.out.println("DELETE COUPON PURCHASES");
++            this.couponDAO.deletePurchaseCoupon(couponId);
++            System.out.println("DELETE COUPON");
++            this.couponDAO.deleteCouponCompany(companyID, couponId);
++        } else {
++            throw new CouponSystemException(ErrorMsg.COUPON_NOT_BELONG_TO_COMPANY);
++        }
++    }
++}
+Index: src/main/java/com/ar/playground/Test.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/ar/playground/Test.java b/src/main/java/com/ar/playground/Test.java
+new file mode 100644
+--- /dev/null	(date 1625117446650)
++++ b/src/main/java/com/ar/playground/Test.java	(date 1625117446650)
+@@ -0,0 +1,1011 @@
++package com.ar.playground;
++
++import com.ar.beans.Category;
++import com.ar.beans.Company;
++import com.ar.beans.Coupon;
++import com.ar.beans.Customer;
++import com.ar.dao.CompanyDAO;
++import com.ar.dao.CouponDAO;
++import com.ar.dao.CustomerCouponDao;
++import com.ar.dao.CustomerDAO;
++import com.ar.datafactory.CompanyFactory;
++import com.ar.datafactory.CouponFactory;
++import com.ar.db.DatabaseManager;
++import com.ar.dbdao.*;
++import com.ar.exceptions.CouponSystemException;
++import com.ar.exceptions.ErrorMsg;
++import com.ar.facades.AdminFacade;
++import com.ar.facades.CompanyFacade;
++import com.ar.facades.CustomerFacade;
++import com.ar.job.CouponExpirationDailyJob;
++import com.ar.security.ClientType;
++import com.ar.security.LoginManager;
++import com.ar.utils.ArtUtils;
++import com.ar.utils.PrintUtils;
++import com.ar.utils.TablePrinter;
++
++import java.sql.Date;
++import java.sql.SQLException;
++import java.time.LocalDate;
++import java.util.List;
++
++public class Test {
++    public static void main(String[] args) throws SQLException {
++        System.out.println("START");
++        DatabaseManager.dropAndCreate();
++
++        Thread thread = new Thread(new CouponExpirationDailyJob());
++        thread.setDaemon(true);
++        thread.start();
++
++        try {
++            testCompany();
++            testCustomer();
++            testCoupons();
++
++            testAdminFacade();
++            testCompanyFacade();
++            testCustomerFacade();
++        } catch (CouponSystemException cse) {
++            System.out.println(cse.getMessage());
++        }
++
++        System.out.println("END");
++    }
++
++    private static void testCompany() throws CouponSystemException {
++        PrintUtils.printTestHeader(ArtUtils.COMPANY);
++        CompanyDAO companyDAO = new CompanyDBDAO();
++
++        testAddCompany(companyDAO);
++        testUpdateCompany(companyDAO);
++        testCompanyExists(companyDAO);
++        testCompanyDelete(companyDAO);
++    }
++
++    private static void testCustomer(){
++        System.out.println(ArtUtils.CUSTOMER);
++        CustomerDAO customerDAO = new CustomerDBDAO();
++
++        testAddCustomer(customerDAO);
++        testUpdateCustomer(customerDAO);
++        testCustomerExists(customerDAO);
++        testDeleteCustomer(customerDAO);
++    }
++
++    private static void testCoupons() {
++        System.out.println(ArtUtils.COUPON);
++        CouponDAO couponDAO = new CouponDBDAO();
++        CustomerDAO customerDAO = new CustomerDBDAO();
++        CustomerCouponDao customerCouponDao = new CustomerCouponDBDAO();
++
++        testAddCoupons(couponDAO);
++        testUpdateCoupon(couponDAO);
++        testDeleteCoupon(couponDAO);
++        testAddCouponPurcase(customerCouponDao, couponDAO, customerDAO);
++    }
++
++    private static void testAdminFacade() throws CouponSystemException {
++        PrintUtils.printTestHeader(ArtUtils.ADMIN_FACADE);
++
++        AdminFacade adminFacade = testAdminLogin();
++
++        testGetAllCompanies(adminFacade);
++        testGetOneCompany(adminFacade);
++        testAddCompany(adminFacade);
++        testAddExistingCompany(adminFacade);
++        testUpdateNotExistedCompany(adminFacade);
++        testUpdateCompanyName(adminFacade);
++        testUpdateCompany(adminFacade);
++        testDeleteCompany(adminFacade);
++
++        testGetAllCustomers(adminFacade);
++        testGetOneCustomer(adminFacade);
++        testAddCustomerWithExistingMail(adminFacade);
++        testAdminAddCustomer(adminFacade);
++        testUpdateCustomerId(adminFacade);
++        testUpdateCustomerEmailToExisting(adminFacade);
++        testAdminUpdateCustomer(adminFacade);
++        testAdminDeleteCustomer(adminFacade);
++    }
++
++    private static void testCompanyFacade() {
++        PrintUtils.printTestHeader(ArtUtils.COMPANY_FACADE);
++
++        CompanyFacade companyFacade = testCompanyLogin();
++
++        testGetCompanyDetails(companyFacade);
++        testGetCompanyCoupons(companyFacade);
++        testAddCompanyCoupon(companyFacade);
++        testAddCompanyCouponSameTitle(companyFacade);
++        testUpdateCompanyCoupon(companyFacade);
++        testUpdateCompanyCouponTitleToExisting(companyFacade);
++        testGetCompanyCouponsByCategory(companyFacade);
++        testCompanyCouponsPriceLessMax(companyFacade);
++        testCompanyDeleteCoupon(companyFacade);
++    }
++
++
++    public static void testCustomerFacade() throws CouponSystemException {
++        PrintUtils.printTestHeader(ArtUtils.CUSTOMER_FACADE);
++
++        CustomerFacade customerFacade = testCustomerLogin();
++
++        testGetCustomerDetails(customerFacade);
++        testAddCustomerCoupon(customerFacade);
++
++        PrintUtils.printHeader("CUSTOMER COUPONS");
++        getCustomerCoupons(customerFacade);
++
++        PrintUtils.printHeader("CUSTOMER COUPONS BY CATEGORY (PC)");
++        getCustomerCoupons(customerFacade, Category.PC);
++
++        PrintUtils.printHeader("CUSTOMER COUPONS BY CATEGORY (RESTAURANT)");
++        getCustomerCoupons(customerFacade, Category.RESTAURANT);
++
++    }
++
++    //--------------------------------------------------------------------------------------------------
++    //      Test Customer Facade Methods
++    //--------------------------------------------------------------------------------------------------
++
++    private static CustomerFacade checkCustomerLogin(String email, String password) {
++        System.out.println("Email: " + email + ", Password: " + password);
++        LoginManager loginManager = LoginManager.getInstance();
++        CustomerFacade customerFacade = null;
++        try {
++            customerFacade = (CustomerFacade) loginManager.login(email,password, ClientType.Customer);
++            if (customerFacade == null) {
++                System.out.println(ErrorMsg.BAD_CUSTOMER_LOGIN.getMessage());
++            } else {
++                System.out.println(ErrorMsg.OK_CUSTOMER_LOGIN.getMessage());
++            }
++        } catch (CouponSystemException cse) {
++            System.out.println(cse.getMessage());
++        } catch (SQLException se) {
++            se.printStackTrace();
++        }
++        return customerFacade;
++    }
++
++    public static CustomerFacade testCustomerLogin() {
++        PrintUtils.printHeader("CHECK BAD LOGIN");
++        CustomerFacade customerFacade = checkCustomerLogin("stam@gmail.com", "KSP");
++
++        PrintUtils.printHeader("CHECK OK LOGIN");
++        customerFacade = checkCustomerLogin("ab@gmail.com","ccc");
++
++        return customerFacade;
++    }
++
++    private static void testGetCustomerDetails(CustomerFacade customerFacade) {
++        PrintUtils.printHeader("CUSTOMER DETAILS");
++        try {
++            Customer customer = customerFacade.getCustomerDetails();
++            TablePrinter.print(customer);
++        } catch (SQLException se) {
++            se.printStackTrace();
++        }
++    }
++
++    private static void testPurchaseExpiredCoupon(CustomerFacade customerFacade){
++        CouponDAO couponDAO = new CouponDBDAO();
++        try {
++            couponDAO.addEntity(CouponFactory.getOneExpired(1,3,Category.PC));
++            addCustomerCoupon(customerFacade,10);
++        } catch (CouponSystemException cse) {
++            System.out.println(cse.getMessage());
++        } catch (SQLException se) {
++            se.printStackTrace();
++        }
++    }
++
++    private static void testAddCustomerCoupon(CustomerFacade customerFacade) {
++        PrintUtils.printHeader("CUSTOMER PURCHASE COUPON (5)");
++        System.out.println("Customer coupons before purchase:");
++
++        getCustomerCoupons(customerFacade);
++        addCustomerCoupon(customerFacade, 5);
++        System.out.println("Customer coupons after purchase:");
++        getCustomerCoupons(customerFacade);
++
++        PrintUtils.printHeader("CUSTOMER PURCHASE THE SAME COUPON (Id = 5)");
++        addCustomerCoupon(customerFacade, 5);
++
++        PrintUtils.printHeader("CUSTOMER PURCHASE COUPON OUT OF STOCK (Id = 7)");
++        addCustomerCoupon(customerFacade, 7);
++
++        PrintUtils.printHeader("CUSTOMER PURCHASE EXPIRED COUPON id = 10");
++        testPurchaseExpiredCoupon(customerFacade);
++    }
++
++    private static void addCustomerCoupon(CustomerFacade customerFacade, int couponID) {
++        try {
++            customerFacade.addCustomerPurchase(couponID);
++        } catch (CouponSystemException cse) {
++            System.out.println(cse.getMessage());
++        } catch (SQLException se) {
++            se.printStackTrace();
++        }
++    }
++
++    private static void getCustomerCoupons(CustomerFacade customerFacade) {
++        try {
++            List<Coupon> coupons = customerFacade.getCustomerCoupons();
++            if (coupons.size() == 0)
++                System.out.println("Customer has no coupons");
++            else
++                TablePrinter.print(coupons);
++        } catch (SQLException se) {
++            se.printStackTrace();
++        }
++    }
++
++    private static void getCustomerCoupons(CustomerFacade customerFacade, Category category) {
++        try {
++            List<Coupon> coupons = customerFacade.getCustomerCoupons(category);
++            if (coupons.size() == 0)
++                System.out.println("Customer has no coupons");
++            else
++                TablePrinter.print(coupons);
++        } catch (SQLException se) {
++            se.printStackTrace();
++        }
++    }
++
++
++    //--------------------------------------------------------------------------------------------------
++    //      Test Company Facade Methods
++    //--------------------------------------------------------------------------------------------------
++    private static CompanyFacade checkCompanyLogin(String email, String password) {
++        System.out.println("Email: " + email + ", Password: " + password);
++        LoginManager loginManager = LoginManager.getInstance();
++        CompanyFacade companyFacade = null;
++        try {
++            companyFacade = (CompanyFacade) loginManager.login(email,password, ClientType.Company);
++            if (companyFacade == null) {
++                System.out.println(ErrorMsg.BAD_COMPANY_LOGIN.getMessage());
++            } else {
++                System.out.println(ErrorMsg.OK_COMPANY_LOGIN.getMessage());
++            }
++        } catch (CouponSystemException cse) {
++            System.out.println(cse.getMessage());
++        } catch (SQLException se) {
++            se.printStackTrace();
++        }
++        return companyFacade;
++    }
++
++    private static CompanyFacade testCompanyLogin() {
++
++        PrintUtils.printHeader("CHECK BAD LOGIN");
++        CompanyFacade companyFacade = checkCompanyLogin("stam@gmail.com", "KSP");
++
++        PrintUtils.printHeader("CHECK OK LOGIN");
++        companyFacade = checkCompanyLogin("alla3.royzman@gmail.com","123");
++
++        return companyFacade;
++    }
++
++    private static void testGetCompanyDetails(CompanyFacade companyFacade) {
++        PrintUtils.printHeader("COMPANY DETAILS");
++        try {
++            Company company = companyFacade.getCompanyDetails();
++            TablePrinter.print(company);
++        } catch (CouponSystemException cse) {
++            System.out.println(cse.getMessage());
++        } catch (SQLException se) {
++            se.printStackTrace();
++        }
++    }
++
++    private static void getCompanyCoupons(CompanyFacade companyFacade) {
++        try {
++            TablePrinter.print(companyFacade.getCompanyCoupons());
++        } catch (SQLException se) {
++            PrintUtils.printSqlError(se);
++        }
++    }
++
++    private static void testGetCompanyCoupons(CompanyFacade companyFacade) {
++        PrintUtils.printHeader("GET COMPANY COUPONS");
++        getCompanyCoupons(companyFacade);
++    }
++
++    private static void testAddCompanyCoupon(CompanyFacade companyFacade) {
++        PrintUtils.printHeader("ADD COMPANY COUPON");
++        Coupon coupon = null;
++        //Coupon coupon1 = null;
++        try {
++            coupon = CouponFactory.getOne(1,companyFacade.getCompanyID(), Category.PC);
++        } catch (CouponSystemException cse) {
++            System.out.println(cse.getMessage());
++        }
++        addCompanyCoupon(companyFacade, coupon);
++        System.out.println("Add company coupon");
++        getCompanyCoupons(companyFacade);
++    }
++
++    private static void addCompanyCoupon(CompanyFacade companyFacade, Coupon coupon) {
++        try {
++            companyFacade.addCoupon(coupon);
++        } catch (CouponSystemException cse) {
++            System.out.println(cse.getMessage());
++        } catch (SQLException se) {
++            PrintUtils.printSqlError(se);
++        }
++    }
++
++    private static void testAddCompanyCouponSameTitle(CompanyFacade companyFacade) {
++        PrintUtils.printHeader("ADD COMPANY COUPON WITH THE SAME TITLE");
++        Coupon coupon = null;
++        try {
++            coupon = CouponFactory.getOne(1,companyFacade.getCompanyID(), Category.FOOD);
++        } catch (CouponSystemException cse) {
++            System.out.println(cse.getMessage());
++        }
++        addCompanyCoupon(companyFacade, coupon);
++    }
++
++    private static void testUpdateCompanyCoupon(CompanyFacade companyFacade) {
++        int couponId = 5;
++        PrintUtils.printHeader("UPDATE COMPANY COUPON id = " + couponId);
++        Coupon toUpdate = null;
++        try {
++            toUpdate = companyFacade.getCompanyCoupon(couponId);
++            toUpdate.setTitle("Lavazza super coffee");
++            updateCompanyCoupon(companyFacade,toUpdate);
++            getCompanyCoupons(companyFacade);
++
++        } catch (CouponSystemException cse) {
++            System.out.println(cse.getMessage());
++        } catch (SQLException se) {
++            PrintUtils.printSqlError(se);
++        }
++    }
++
++    private static void updateCompanyCoupon(CompanyFacade companyFacade, Coupon coupon) {
++        try {
++            companyFacade.updateCoupon(coupon);
++        } catch (CouponSystemException cse) {
++            System.out.println(cse.getMessage());
++        }catch (SQLException se) {
++            PrintUtils.printSqlError(se);
++        }
++    }
++
++    private static void testUpdateCompanyCouponTitleToExisting(CompanyFacade companyFacade) {
++        int couponId = 5;
++        String newTitle = "Ice cream";
++        PrintUtils.printHeader("UPDATE COMPANY COUPON TITLE TO EXISTING id = " + couponId);
++        System.out.println("Try update title to " + newTitle);
++        Coupon toUpdate = null;
++        try {
++            toUpdate = companyFacade.getCompanyCoupon(couponId);
++            toUpdate.setTitle(newTitle);
++            updateCompanyCoupon(companyFacade, toUpdate);
++            getCompanyCoupons(companyFacade);
++        } catch (CouponSystemException cse) {
++            System.out.println(cse.getMessage());
++        } catch (SQLException se) {
++            PrintUtils.printSqlError(se);
++        }
++    }
++
++    private static void testGetCompanyCouponsByCategory(CompanyFacade companyFacade) {
++        PrintUtils.printHeader("GET COMPANY COUPONS BY CATEGORY FOOD");
++        getCompanyCouponsByCategory(companyFacade, Category.FOOD);
++
++        PrintUtils.printHeader("GET COMPANY COUPONS BY CATEGORY FASHION");
++        getCompanyCouponsByCategory(companyFacade, Category.FASHION);
++    }
++
++    private static void getCompanyCouponsByCategory(CompanyFacade companyFacade, Category category) {
++        try {
++            List<Coupon> coupons = companyFacade.getCompanyCoupons(category);
++            if (coupons.size() == 0)
++                System.out.println("The company has no coupons in this category");
++            else
++                TablePrinter.print(companyFacade.getCompanyCoupons(category));
++        } catch (SQLException se) {
++            PrintUtils.printSqlError(se);
++        }
++    }
++
++    private static void testCompanyCouponsPriceLessMax(CompanyFacade companyFacade) {
++        double maxPrice = 50;
++        PrintUtils.printHeader("GET COMPANY COUPONS WITH PRICE LESS THAN " + maxPrice);
++        getCompanyCouponsByPrice(companyFacade, maxPrice);
++    }
++
++    private static void getCompanyCouponsByPrice(CompanyFacade companyFacade, double maxPrice) {
++        try {
++            TablePrinter.print(companyFacade.getCompanyCoupons(maxPrice));
++        } catch (SQLException se) {
++            PrintUtils.printSqlError(se);
++        }
++    }
++
++    private static void testCompanyDeleteCoupon(CompanyFacade companyFacade) {
++        PrintUtils.printHeader("DELETE COMPANY COUPON");
++        deleteCompanyCoupon(companyFacade,6);
++        getCompanyCoupons(companyFacade);
++    }
++
++    private static void deleteCompanyCoupon(CompanyFacade companyFacade, int couponId) {
++        try {
++            companyFacade.deleteCoupon(couponId);
++        } catch ( CouponSystemException cse) {
++            System.out.println(cse.getMessage());
++        }catch (SQLException se) {
++            PrintUtils.printSqlError(se);
++        }
++
++    }
++
++    //--------------------------------------------------------------------------------------------------
++    //      Test Admin Facade Methods, Companies
++    //--------------------------------------------------------------------------------------------------
++
++    private static AdminFacade checkAdminLogin(String email, String password) {
++        System.out.println("Email: " + email + ", Password: " + password);
++        LoginManager loginManager = LoginManager.getInstance();
++        AdminFacade adminFacade = null;
++        try {
++            adminFacade = (AdminFacade)loginManager.login(email,password, ClientType.Administrator);
++            if (adminFacade == null) {
++                System.out.println(ErrorMsg.BAD_ADMIN_LOGIN.getMessage());
++            } else {
++                System.out.println(ErrorMsg.OK_ADMIN_LOGIN.getMessage());
++            }
++        } catch (CouponSystemException cse) {
++            System.out.println(cse.getMessage());
++        } catch (SQLException se) {
++            se.printStackTrace();
++        }
++        return adminFacade;
++    }
++
++    private static AdminFacade testAdminLogin() {
++        PrintUtils.printHeader("CHECK BAD LOGIN");
++        AdminFacade adminFacade = checkAdminLogin("admin@gmail.com", "admin");
++
++        PrintUtils.printHeader("CHECK OK LOGIN");
++        adminFacade = checkAdminLogin("admin@admin.com","admin");
++
++        return adminFacade;
++    }
++
++    private static void testGetAllCompanies(AdminFacade adminFacade) {
++        PrintUtils.printHeader("GET ALL COMPANIES");
++        try {
++            TablePrinter.print(adminFacade.getAllCompanies());
++        } catch (CouponSystemException cse) {
++            System.out.println(cse.getMessage());
++        } catch (SQLException se) {
++            se.printStackTrace();
++        }
++    }
++
++    private static void testGetOneCompany(AdminFacade adminFacade) {
++        PrintUtils.printHeader("GET ONE COMPANY");
++        try {
++            TablePrinter.print(adminFacade.getOneCompany(2));
++        } catch (CouponSystemException cse) {
++            System.out.println(cse.getMessage());
++        } catch (SQLException se) {
++            se.printStackTrace();
++        }
++    }
++
++    private static void testAddCompany(AdminFacade adminFacade) {
++        PrintUtils.printHeader("ADD COMPANY");
++
++        try {
++            for (int i = 0; i < 5; i++) {
++                adminAddCompany(adminFacade, CompanyFactory.getOne(i));
++            }
++            TablePrinter.print(adminFacade.getAllCompanies());
++        } catch (CouponSystemException cse) {
++            System.out.println(cse.getMessage());
++        } catch (SQLException se) {
++            se.printStackTrace();
++        }
++    }
++
++    private static void adminAddCompany(AdminFacade adminFacade, Company company) {
++        try {
++            adminFacade.addCompany(company);
++        } catch (Exception cse) {
++            System.out.println( cse.getMessage());
++        }
++    }
++
++    private static void testAddExistingCompany(AdminFacade adminFacade) {
++        PrintUtils.printHeader("ADD EXISTING COMPANY");
++        System.out.println("Name: " + CompanyFactory.getName(1) + ", mail: " + CompanyFactory.getMail(1));
++        try {
++            adminAddCompany(adminFacade,CompanyFactory.getOne(1));
++        } catch (CouponSystemException cse) {
++            System.out.println(cse.getMessage());
++        }
++    }
++
++    private static void testUpdateNotExistedCompany(AdminFacade adminFacade) {
++        PrintUtils.printHeader("UPDATE NOT EXISTED COMPANY");
++        try {
++            adminUpdateCompany(adminFacade,CompanyFactory.getOne(6));
++        } catch (CouponSystemException cse) {
++            System.out.println(cse.getMessage());
++        }
++    }
++
++    private static void adminUpdateCompany(AdminFacade adminFacade, Company company) {
++        try {
++            adminFacade.updateCompany(company);
++        } catch (CouponSystemException cse) {
++            System.out.println( cse.getMessage());
++        } catch (SQLException se) {
++            se.printStackTrace();
++        }
++    }
++
++    private static void testUpdateCompanyName(AdminFacade adminFacade) {
++        PrintUtils.printHeader("UPDATE COMPANY NAME");
++        try {
++            Company company = adminFacade.getOneCompany(4);
++            company.setName("New Name");
++            adminUpdateCompany(adminFacade, company);
++        } catch (CouponSystemException cse) {
++            System.out.println(cse.getMessage());
++        } catch (SQLException se) {
++            se.printStackTrace();
++        }
++    }
++
++    private static void testUpdateCompany(AdminFacade adminFacade) {
++        PrintUtils.printHeader("UPDATE COMPANY id = 4");
++        try {
++            Company company = adminFacade.getOneCompany(4);
++            company.setEmail("company@newmail.co.il");
++            adminUpdateCompany(adminFacade, company);
++            TablePrinter.print(adminFacade.getAllCompanies());
++        } catch (CouponSystemException cse) {
++            System.out.println(cse.getMessage());
++        } catch (SQLException se) {
++            se.printStackTrace();
++        }
++    }
++
++    private static void testDeleteCompany(AdminFacade adminFacade) {
++        PrintUtils.printHeader("DELETE COMPANY");
++        try {
++            TablePrinter.print(adminFacade.getAllCompanies());
++            int companyId = 2;
++            System.out.println("Company to delete: id = " + companyId);
++
++            System.out.println("Company Coupons:");
++            TablePrinter.print(adminFacade.getCompanyCoupons(companyId));
++            if (adminFacade.deleteCompany(companyId))
++                System.out.println("Company deleted");
++            TablePrinter.print(adminFacade.getAllCompanies());
++
++            List<Coupon> companyCoupons = adminFacade.getCompanyCoupons(companyId);
++            if (companyCoupons.size() == 0)
++                System.out.println("The system does not have coupons belonging to this company");
++            else
++                TablePrinter.print(companyCoupons);
++
++        } catch (CouponSystemException cse) {
++            System.out.println(cse.getMessage());
++        } catch (SQLException se) {
++            se.printStackTrace();
++        }
++    }
++
++    //--------------------------------------------------------------------------------------------------
++    //      Test Admin Facade Methods, Customer
++    //--------------------------------------------------------------------------------------------------
++    private static void testGetAllCustomers(AdminFacade adminFacade) {
++        PrintUtils.printHeader("GET ALL CUSTOMERS");
++        try {
++            TablePrinter.print(adminFacade.getAllCustomers());
++        } catch (CouponSystemException cse) {
++            System.out.println(cse.getMessage());
++        } catch (SQLException se) {
++            se.printStackTrace();
++        }
++    }
++
++    private static void testGetOneCustomer(AdminFacade adminFacade) {
++        PrintUtils.printHeader("GET ONE CUSTOMER");
++        try {
++            TablePrinter.print(adminFacade.getOneCustomer(2));
++        } catch (CouponSystemException cse) {
++            System.out.println(cse.getMessage());
++        } catch (SQLException se) {
++            se.printStackTrace();
++        }
++    }
++
++    private static void testAddCustomerWithExistingMail(AdminFacade adminFacade) {
++        PrintUtils.printHeader("ADD CUSTOMER WITH EXISTING EMAIL");
++        Customer customer = new Customer("Mike","Wol","bbb.bbb@gmail.com","123");
++        adminAddCustomer(adminFacade, customer);
++
++        try {
++            TablePrinter.print(adminFacade.getAllCustomers());
++        } catch (CouponSystemException cse) {
++            System.out.println(cse.getMessage());
++        } catch (SQLException se) {
++            se.printStackTrace();
++        }
++    }
++
++    private static void adminAddCustomer(AdminFacade adminFacade, Customer customer) {
++        try {
++            adminFacade.addCustomer(customer);
++        } catch (Exception cse) {
++            System.out.println( cse.getMessage());
++        }
++    }
++
++    private static void testAdminAddCustomer(AdminFacade adminFacade) {
++        PrintUtils.printHeader("ADD CUSTOMER WITH NEW EMAIL");
++        Customer customer = new Customer("Mike","Wol","mike.w@gmail.com","123");
++        try {
++            adminFacade.addCustomer(customer);
++            TablePrinter.print(adminFacade.getAllCustomers());
++        } catch (CouponSystemException cse) {
++            System.out.println(cse.getMessage());
++        } catch (SQLException se) {
++            se.printStackTrace();
++        }
++    }
++
++    private static void testUpdateCustomerId(AdminFacade adminFacade) {
++        PrintUtils.printHeader("UPDATE CUSTOMER ID");
++        try {
++            Customer customer = adminFacade.getOneCustomer(2);
++            Customer toUpdate = adminFacade.getOneCustomer(2);
++            toUpdate.setId(4);
++            if (customer.getId() != toUpdate.getId())
++                System.out.println(ErrorMsg.CUSTOMER_ID_NOT_UPDATABLE.getMessage());
++        } catch (CouponSystemException cse) {
++            System.out.println(cse.getMessage());
++        } catch (SQLException se) {
++            se.printStackTrace();
++        }
++    }
++
++    private static void testUpdateCustomerEmailToExisting(AdminFacade adminFacade) {
++        PrintUtils.printHeader("UPDATE CUSTOMER EMAIL TO EXISTING");
++        try {
++            Customer customer = adminFacade.getOneCustomer(2);
++            customer.setEmail("mike.w@gmail.com");
++            adminUpdateCustomer(adminFacade,customer);
++
++        } catch (CouponSystemException cse) {
++            System.out.println(cse.getMessage());
++        } catch (SQLException se) {
++            se.printStackTrace();
++        }
++    }
++
++    private static void testAdminUpdateCustomer(AdminFacade adminFacade) {
++        PrintUtils.printHeader("UPDATE CUSTOMER");
++        try {
++            Customer customer = adminFacade.getOneCustomer(2);
++            customer.setFirstName("Piter");
++            customer.setLastName("Pen");
++            customer.setEmail("piter.pen@gmail.com");
++            adminUpdateCustomer(adminFacade,customer);
++        } catch (CouponSystemException cse) {
++            System.out.println(cse.getMessage());
++        } catch (SQLException se) {
++            se.printStackTrace();
++        }
++
++    }
++
++    private static void adminUpdateCustomer(AdminFacade adminFacade,Customer customer)  {
++        try {
++            adminFacade.updateCustomer(customer);
++            TablePrinter.print(customer);
++        } catch (CouponSystemException cse) {
++            System.out.println(cse.getMessage());
++        } catch (SQLException se) {
++            se.printStackTrace();
++        }
++    }
++
++    private static void testAdminDeleteCustomer(AdminFacade adminFacade) {
++        PrintUtils.printHeader("DELETE CUSTOMER");
++        int customerId = 2;
++        try {
++            TablePrinter.print(adminFacade.getAllCustomers());
++            System.out.println("Customer to delete is " + customerId);
++            System.out.println("Customer Coupons:");
++            TablePrinter.print(adminFacade.getCustomerCoupons(customerId));
++
++            adminFacade.deleteCustomer(customerId);
++            TablePrinter.print(adminFacade.getAllCustomers());
++            List<Coupon> couponList = adminFacade.getCustomerCoupons(customerId);
++            if (couponList.isEmpty())
++                System.out.println("There is now coupons for customer id = " + customerId);
++            else
++                TablePrinter.print(couponList);
++        } catch (CouponSystemException cse) {
++            System.out.println(cse.getMessage());
++        } catch (SQLException se) {
++            se.printStackTrace();
++        }
++    }
++
++
++    //--------------------------------------------------------------------------------------------------
++    //      Test Company Methods
++    //--------------------------------------------------------------------------------------------------
++
++    private static void testAddCompany(CompanyDAO companyDAO) {
++        PrintUtils.printHeader("ADD COMPANY");
++
++        Company company1 = new Company("Alla1 LTD", "alla1.royzman@gmail.com", "alla1");
++        Company company2 = new Company("Alla2 LTD", "alla2.royzman@gmail.com","alla2");
++        Company company3 = new Company("Alla3 LTD", "alla3.royzman@gmail.com","alla3");
++        try {
++            companyDAO.addEntity(company1);
++            companyDAO.addEntity(company2);
++            companyDAO.addEntity(company3);
++            TablePrinter.print(companyDAO.getAllEntities());
++        } catch (SQLException se) {
++            se.printStackTrace();
++        }
++    }
++
++    private static void testUpdateCompany (CompanyDAO companyDAO) {
++        PrintUtils.printHeader("UPDATE COMPANY id = 3");
++
++        try {
++            Company toUpdate = companyDAO.getOneEntity(3);
++            if (toUpdate == null)
++                System.out.println(ErrorMsg.COMPANY_ID_NOT_EXISTS);
++            else {
++                toUpdate.setPassword("123");
++                companyDAO.updateEntity(toUpdate);
++                TablePrinter.print(companyDAO.getAllEntities());
++            }
++        } catch (SQLException se) {
++            se.printStackTrace();
++        }
++    }
++
++    private static void testCompanyExists(CompanyDAO companyDAO) {
++        PrintUtils.printHeader("CHECK COMPANY EXISTS ");
++
++        try {
++            PrintUtils.printEntityExists(
++                    companyDAO.isCompanyExists(IsExistsQuery.COMPANY_EMAIL_AND_PASSWORD,
++                            "alla1.royzman@gmail.com", "alla1"),
++                    "Company",
++                    "alla1.royzman@gmail.com",
++                    "alla1"
++            );
++
++            PrintUtils.printLine();
++            PrintUtils.printEntityExists(
++                    companyDAO.isCompanyExists(IsExistsQuery.COMPANY_EMAIL_AND_PASSWORD,
++                            "allaR.royzman@gmail.com", "allaR"),
++                    "Company",
++                    "allaR.royzman@gmail.com",
++                    "allaR"
++            );
++
++        } catch (CouponSystemException cse) {
++            System.out.println(cse.getMessage());
++        } catch (SQLException se) {
++            se.printStackTrace();
++        }
++    }
++
++    private static void testCompanyDelete(CompanyDAO companyDAO) {
++        PrintUtils.printHeader("DELETE COMPANY");
++        try {
++            companyDAO.deleteEntity(1);
++            TablePrinter.print(companyDAO.getAllEntities());
++        } catch (SQLException se) {
++            se.printStackTrace();
++        }
++    }
++
++
++    //--------------------------------------------------------------------------------------------------
++    //      Test Customer Methods
++    //--------------------------------------------------------------------------------------------------
++
++    private static void testAddCustomer(CustomerDAO customerDAO) {
++        PrintUtils.printHeader("ADD CUSTOMER");
++        Customer customer1 = new Customer("aaa","AAA" ,"aaa.aaa@gmail.com", "aaa");
++        Customer customer2 = new Customer("bbb","BBB" ,"bbb.bbb@gmail.com", "bbb");
++        Customer customer3 = new Customer("ccc","CCC" ,"ccc.ccc@gmail.com", "ccc");
++
++        try {
++            customerDAO.addEntity(customer1);
++            customerDAO.addEntity(customer2);
++            customerDAO.addEntity(customer3);
++
++            TablePrinter.print(customerDAO.getAllEntities());
++        } catch (SQLException se ) {
++            se.printStackTrace();
++        }
++
++    }
++
++    private static void testUpdateCustomer(CustomerDAO customerDAO) {
++        PrintUtils.printHeader("UPDATE CUSTOMER");
++        try {
++            Customer toUpdate = customerDAO.getOneEntity(3);
++            toUpdate.setFirstName("Anna");
++            toUpdate.setLastName("Brown");
++            toUpdate.setEmail("ab@gmail.com");
++            customerDAO.updateEntity(toUpdate);
++            TablePrinter.print(customerDAO.getAllEntities());
++        } catch (SQLException se ) {
++            se.printStackTrace();
++        }
++    }
++
++    private static void testCustomerExists(CustomerDAO customerDAO) {
++        PrintUtils.printHeader("CHECK CUSTOMER EXISTS");
++        try {
++            PrintUtils.printEntityExists(customerDAO.isCustomerExists("aaa.aaa@gmail.com", "aaa"),
++                    "Customer","aaa.aaa@gmail.com", "aaa");
++            PrintUtils.printEntityExists(customerDAO.isCustomerExists("allaR.royzman@gmail.com", "allaR"),
++                    "Customer","allaR.royzman@gmail.com", "allaR");
++        } catch (SQLException se ) {
++            se.printStackTrace();
++        }
++    }
++
++    private static void testDeleteCustomer(CustomerDAO customerDAO) {
++        PrintUtils.printHeader("DELETE CUSTOMER");
++        try {
++            customerDAO.deleteEntity(1);
++            TablePrinter.print(customerDAO.getAllEntities());
++        } catch (SQLException se ) {
++            se.printStackTrace();
++        }
++    }
++
++    //--------------------------------------------------------------------------------------------------
++    //      Test Coupons Methods
++    //--------------------------------------------------------------------------------------------------
++
++    private static void testAddCoupons(CouponDAO couponDAO) {
++        PrintUtils.printHeader("ADD COUPON");
++
++        Coupon coupon1 = new Coupon(
++                2,
++                Category.FASHION,
++                "Week in Roma",
++                "Fantastic vacation",
++                Date.valueOf(LocalDate.now()),
++                Date.valueOf(LocalDate.now().plusMonths(1)),
++                100,
++                99.99,
++                "image"
++        );
++
++        Coupon coupon2 = new Coupon(
++                3,
++                Category.FOOD,
++                "Ice cream",
++                "Yami-yami",
++                Date.valueOf(LocalDate.now()),
++                Date.valueOf(LocalDate.now().plusMonths(1)),
++                1000,
++                2.99,
++                "image"
++        );
++
++        Coupon coupon3 = new Coupon(
++                2,
++                Category.RESTAURANT,
++                "Beaf",
++                "Anak",
++                Date.valueOf(LocalDate.now()),
++                Date.valueOf(LocalDate.now().plusMonths(1)),
++                200,
++                21.00,
++                "image"
++        );
++
++        Coupon expCoupon = new Coupon(
++                3,
++                Category.RESTAURANT,
++                "Beaf Ex",
++                "Anak",
++                Date.valueOf(LocalDate.now().plusDays(-2)),
++                Date.valueOf(LocalDate.now().plusDays(-1)),
++                200,
++                21.00,
++                "image"
++        );
++
++        try {
++            couponDAO.addEntity(coupon1);
++            couponDAO.addEntity(coupon2);
++            couponDAO.addEntity(coupon3);
++
++            coupon2.setCompanyId(2);
++            couponDAO.addEntity(coupon2);
++            coupon3.setCompanyId(3);
++            couponDAO.addEntity(coupon3);
++
++            couponDAO.addEntity(expCoupon);
++
++            Coupon coupon0 = new Coupon(
++                    2,
++                    Category.FOOD,
++                    "Tea V",
++                    "1+1",
++                    Date.valueOf(LocalDate.now().plusMonths(-1)),
++                    Date.valueOf(LocalDate.now().plusDays(-1)),
++                    2,
++                    5.00,
++                    "image"
++            );
++            couponDAO.addEntity(coupon0);
++
++            TablePrinter.print(couponDAO.getAllEntities());
++        } catch (SQLException se) {
++            se.printStackTrace();
++        }
++
++
++    }
++
++    private static void testUpdateCoupon(CouponDAO couponDAO) {
++        PrintUtils.printHeader("UPDATE COUPON id = 3");
++        try {
++            Coupon toUpdate = couponDAO.getOneEntity(3);
++            toUpdate.setTitle("BIG MAC");
++            toUpdate.setPrice(9.99);
++            couponDAO.updateEntity(toUpdate);
++            TablePrinter.print(couponDAO.getAllEntities());
++        } catch (SQLException se) {
++            se.printStackTrace();
++        }
++    }
++
++    private static void testDeleteCoupon(CouponDAO couponDAO) {
++        PrintUtils.printHeader("DELETE COUPON");
++        try {
++            couponDAO.deleteEntity(1);
++            TablePrinter.print(couponDAO.getAllEntities());
++        } catch (SQLException se) {
++            se.printStackTrace();
++        }
++    }
++
++    private static void testAddCouponPurcase(CustomerCouponDao customerCouponDao, CouponDAO couponDAO, CustomerDAO customerDAO) {
++        PrintUtils.printHeader("ADD COUPON PURCHASE");
++        try {
++            customerCouponDao.addCouponPurchase(2, 2);
++            customerCouponDao.addCouponPurchase(3, 3);
++            customerCouponDao.addCouponPurchase(3, 2);
++            customerCouponDao.addCouponPurchase(2, 3);
++
++            System.out.println("Customer with id 2 has coupons: ");
++            TablePrinter.print(couponDAO.getCouponsCustomer(2));
++
++            System.out.println("Customers with coupon (id =3): ");
++            TablePrinter.print(customerDAO.getCustomersCupon(3));
++        } catch (CouponSystemException cse) {
++            System.out.println(cse.getMessage());
++        } catch (SQLException se) {
++            se.printStackTrace();
++        }
++
++    }
++}
+Index: src/main/java/com/ar/utils/TablePrinter.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/ar/utils/TablePrinter.java b/src/main/java/com/ar/utils/TablePrinter.java
+new file mode 100644
+--- /dev/null	(date 1624693581888)
++++ b/src/main/java/com/ar/utils/TablePrinter.java	(date 1624693581888)
+@@ -0,0 +1,156 @@
++package com.ar.utils;
++//import java.lang.reflect.*;
++import java.lang.reflect.InvocationTargetException;
++import java.lang.reflect.Method;
++import java.lang.reflect.Modifier;
++import java.util.ArrayList;
++import java.util.Collection;
++import java.util.List;
++
++public class TablePrinter {
++    // can add here field names you dont want to show,
++    // for example - List.of("firstname") wont show the field named 'firstName' (insert all lowercase)
++    public static List<String> noShowFields = new ArrayList<>(List.of());
++
++
++
++    public static void print(Object item) {
++        if (item != null) {
++            if (item.getClass().isPrimitive()) {
++                System.out.println(item);
++            } else if (item instanceof Collection<?>) {
++                print(List.copyOf((Collection<?>) item));
++            } else {
++                print(List.of(item));
++            }
++        } else {
++            System.out.println("null");
++        }
++    }
++
++    public static void print(List<?> list) {
++        if (list.isEmpty()) {
++            System.out.println("empty collection");
++            return;
++        }
++        int index = 0;
++        while (index < list.size() && list.get(index) == null) {
++            index++;
++        }
++        if (index == list.size()) {
++            System.out.println("collection of nulls");
++        }
++
++        Class<?> itemClass = list.get(index).getClass();
++
++        List<List<String>> columns = new ArrayList<List<String>>();
++        List<String> columnHeaders = new ArrayList<String>();
++        List<Integer> columnWidths = new ArrayList<Integer>();
++
++        Method[] methods = itemClass.getDeclaredMethods();
++        for (Method method : methods) {
++            String methodName = method.getName();
++            if (methodName.startsWith("get") == false) {
++                continue;
++            }
++            methodName = methodName.substring(3);
++            if (methodName.contains("$") || methodName.contains("Hibernate")) { // skips spring attributes
++                continue;
++            }
++            if (noShowFields.contains(methodName.toLowerCase())) {
++                continue;
++            }
++            List<String> columnStrings = getMethodStringValues(method, list);
++            if (columnStrings.isEmpty()) {
++                continue;
++            }
++            int columnWidth = Math.max(maxWidth(columnStrings), methodName.length());
++
++            columnHeaders.add(methodName);
++            columns.add(columnStrings);
++            columnWidths.add(columnWidth);
++
++        }
++
++        int allWidth = 0;
++        System.out.print("  ");
++        for (int i = 0; i < columnHeaders.size(); i++) {
++            String header = columnHeaders.get(i);
++            int columnWidth = columnWidths.get(i);
++            allWidth += columnWidth;
++            System.out.print(padSpace(header, columnWidth));
++            if (i < columnHeaders.size() - 1) {
++                System.out.print(" | ");
++                allWidth += 3;
++            }
++        }
++        System.out.println();
++
++        System.out.print("  ");
++        System.out.println("-".repeat(allWidth));
++
++        for (int rowIndex = 0; rowIndex < list.size(); rowIndex++) {
++            System.out.print("  ");
++            for (int columnIndex = 0; columnIndex < columns.size(); columnIndex++) {
++                String value = columns.get(columnIndex).get(rowIndex);
++                int columnWidth = columnWidths.get(columnIndex);
++                System.out.print(padSpace(value, columnWidth));
++                if (columnIndex < columns.size() - 1) {
++                    System.out.print(" | ");
++                }
++            }
++            System.out.println();
++        }
++        System.out.println("  " + "-".repeat(allWidth));
++        System.out.println();
++
++    }
++
++    private static List<String> getMethodStringValues(Method method, List<?> objects) {
++        List<String> values = new ArrayList<String>();
++        if (Modifier.isStatic(method.getModifiers())) {
++            return values;
++        }
++        method.setAccessible(true);
++        for (Object object : objects) {
++            if (object == null) {
++                values.add("null");
++                continue;
++            }
++            try {
++                Object objectField = method.invoke(object, (Object[]) null);
++                if (objectField == null) {
++                    values.add("null");
++                } else {
++                    values.add(objectField.toString());
++                }
++            } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
++            }
++        }
++
++        return values;
++    }
++
++    private static int maxWidth(List<String> ls) {
++        int width = 0;
++        for (String string : ls) {
++            width = Math.max(string.length(), width);
++        }
++        return width;
++    }
++
++    private static String padSpace(String str, int length) {
++        StringBuilder builder = new StringBuilder(str);
++        while (builder.length() <= length - 2) {
++            builder.append(' ');
++            builder.insert(0, ' ');
++        }
++        if (builder.length() < length) {
++            builder.insert(0, ' ');
++        }
++        return builder.toString();
++    }
++
++
++
++}
+Index: src/main/java/com/ar/utils/MapUtils.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/ar/utils/MapUtils.java b/src/main/java/com/ar/utils/MapUtils.java
+new file mode 100644
+--- /dev/null	(date 1625030947418)
++++ b/src/main/java/com/ar/utils/MapUtils.java	(date 1625030947418)
+@@ -0,0 +1,139 @@
++package com.ar.utils;
++
++import com.ar.beans.Category;
++import com.ar.beans.Company;
++import com.ar.beans.Coupon;
++import com.ar.beans.Customer;
++
++import java.sql.ResultSet;
++import java.sql.SQLException;
++import java.util.HashMap;
++import java.util.Map;
++import java.util.Optional;
++
++public class MapUtils {
++
++    public static Map<Integer, Object> getMapCoupon(Coupon coupon) {
++        Map<Integer, Object> map = new HashMap<>();
++        map.put(1, coupon.getCompanyId());
++        map.put(2, coupon.getCategory().ordinal() + 1);
++        map.put(3, coupon.getTitle());
++        map.put(4, coupon.getDescription());
++        map.put(5, coupon.getStartDate());
++        map.put(6, coupon.getEndDate());
++        map.put(7, coupon.getAmount());
++        map.put(8, coupon.getPrice());
++        map.put(9, coupon.getImage());
++        return map;
++    }
++
++    public static Map<Integer, Object> getMapCouponWithId(Coupon coupon) {
++        Map<Integer, Object> map = getMapCoupon(coupon);
++        map.put(10, coupon.getId());
++        return map;
++    }
++
++    public static  Map<Integer, Object> getMapId(Integer id) {
++        Map<Integer, Object> map = new HashMap<>();
++        map.put(1, id);
++        return map;
++    }
++    public static  Map<Integer, Object> getMapId(Integer id1, int id2) {
++        Map<Integer, Object> map = new HashMap<>();
++        map.put(1, id1);
++        map.put(2, id2);
++        return map;
++    }
++    public static  Map<Integer, Object> getMapEmailPassword(String email, String password) {
++        Map<Integer, Object> map = new HashMap<>();
++        map.put(1, email);
++        map.put(2, password);
++        return map;
++    }
++
++    public static  Map<Integer, Object> getMapIdTitle(int id, String title) {
++        Map<Integer, Object> map = new HashMap<>();
++        map.put(1, id);
++        map.put(2, title);
++        return map;
++    }
++
++    public static Map<Integer, Object> getMapCustomer(Customer customer) {
++        Map<Integer, Object> map = new HashMap<>();
++        map.put(1, customer.getFirstName());
++        map.put(2, customer.getLastName());
++        map.put(3, customer.getEmail());
++        map.put(4, customer.getPassword());
++        return map;
++    }
++
++    public static Map<Integer, Object> getMapCustomerWithId(Customer customer) {
++        Map<Integer, Object> map = getMapCustomer(customer);
++        map.put(5, customer.getId());
++        return map;
++    }
++
++    public static Map<Integer, Object>  getMapCompany(Company company) {
++        Map<Integer, Object> map = new HashMap<>();
++        map.put(1, company.getName());
++        map.put(2, company.getEmail());
++        map.put(3, company.getPassword());
++        return map;
++    }
++    public static Map<Integer, Object>  getMapCompanyWithId(Company company) {
++        Map<Integer, Object> map = getMapCompany(company);
++        map.put(4, company.getId());
++        return map;
++    }
++
++
++    //-----------------------------------
++    //  from ResultSet
++    //-----------------------------------
++    public static Customer getCustomer(ResultSet resultSet) throws SQLException {
++        return new Customer(
++                resultSet.getString(2),
++                resultSet.getString(3),
++                resultSet.getString(4),
++                resultSet.getString(5));
++    }
++    public static Customer getCustomerWithID(ResultSet resultSet) throws SQLException {
++        Customer customer = getCustomer(resultSet);
++        customer.setId(resultSet.getInt(1));
++        return customer;
++    }
++
++    public static Company getCompany(ResultSet resultSet) throws SQLException {
++        return new Company(
++               // resultSet.getInt(1),
++                resultSet.getString(2),
++                resultSet.getString(3),
++                resultSet.getString(4));
++    }
++
++    public static Company getCompanyWithId(ResultSet resultSet) throws SQLException {
++        Company company = getCompany(resultSet);
++        company.setId(resultSet.getInt(1));
++        return company;
++    }
++
++    public static Coupon getCoupon(ResultSet resultSet) throws SQLException {
++        return new Coupon(
++                resultSet.getInt(2),
++                Category.values()[resultSet.getInt(3) - 1],
++                resultSet.getString(4),
++                resultSet.getString(5),
++                resultSet.getDate(6),
++                resultSet.getDate(7),
++                resultSet.getInt(8),
++                resultSet.getDouble(9),
++                resultSet.getString(10)
++        );
++    }
++
++    public static Coupon getCouponWithId(ResultSet resultSet) throws SQLException {
++        Coupon coupon = getCoupon(resultSet);
++        coupon.setId(resultSet.getInt(1));
++        return coupon;
++    }
++}
+Index: .idea/.gitignore
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/.gitignore b/.idea/.gitignore
+new file mode 100644
+--- /dev/null	(date 1623658887297)
++++ b/.idea/.gitignore	(date 1623658887297)
+@@ -0,0 +1,3 @@
++# Default ignored files
++/shelf/
++/workspace.xml
+Index: .idea/jarRepositories.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/jarRepositories.xml b/.idea/jarRepositories.xml
+new file mode 100644
+--- /dev/null	(date 1623658882423)
++++ b/.idea/jarRepositories.xml	(date 1623658882423)
+@@ -0,0 +1,20 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="RemoteRepositoriesConfiguration">
++    <remote-repository>
++      <option name="id" value="central" />
++      <option name="name" value="Central Repository" />
++      <option name="url" value="https://repo.maven.apache.org/maven2" />
++    </remote-repository>
++    <remote-repository>
++      <option name="id" value="central" />
++      <option name="name" value="Maven Central repository" />
++      <option name="url" value="https://repo1.maven.org/maven2" />
++    </remote-repository>
++    <remote-repository>
++      <option name="id" value="jboss.community" />
++      <option name="name" value="JBoss Community repository" />
++      <option name="url" value="https://repository.jboss.org/nexus/content/repositories/public/" />
++    </remote-repository>
++  </component>
++</project>
+\ No newline at end of file
+Index: src/main/java/com/ar/datafactory/CompanyFactory.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/ar/datafactory/CompanyFactory.java b/src/main/java/com/ar/datafactory/CompanyFactory.java
+new file mode 100644
+--- /dev/null	(date 1624693149692)
++++ b/src/main/java/com/ar/datafactory/CompanyFactory.java	(date 1624693149692)
+@@ -0,0 +1,26 @@
++package com.ar.datafactory;
++
++import com.ar.beans.Company;
++import com.ar.exceptions.CouponSystemException;
++import com.ar.exceptions.ErrorMsg;
++
++public class CompanyFactory {
++    private static final String[] names = {"Supersal","Rami Levi","DOMINO PIZA","KSP","BUG","FOX","GOLF"};
++    private static final String[] mails = {"supersal@gmail.com","ramilevi@gmail.com","dominoPiza@gmail.com","ksp@gmail.com",
++            "bug@gmail.com","fox@gmail.com","golf@gmail.com"};
++    private static final String[] passwords = {"shuper","rami","domino","KSP","BUG","FOX","GOLF"};
++
++    public static Company getOne(int companyNo) throws CouponSystemException {
++        if (companyNo >= names.length)
++            throw new CouponSystemException(ErrorMsg.COMPANY_NUMBER_NOT_EXISTS);
++        return new Company(names[companyNo], mails[companyNo], passwords[companyNo]);
++    }
++
++    public static String getName(int companyNo) {
++        return names[companyNo];
++    }
++
++    public static String getMail(int companyNo) {
++        return mails[companyNo];
++    }
++}
+Index: src/main/java/com/ar/facades/ClientFacade.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/ar/facades/ClientFacade.java b/src/main/java/com/ar/facades/ClientFacade.java
+new file mode 100644
+--- /dev/null	(date 1624868486200)
++++ b/src/main/java/com/ar/facades/ClientFacade.java	(date 1624868486200)
+@@ -0,0 +1,30 @@
++package com.ar.facades;
++
++import com.ar.dao.CompanyDAO;
++import com.ar.dao.CouponDAO;
++import com.ar.dao.CustomerCouponDao;
++import com.ar.dao.CustomerDAO;
++import com.ar.dbdao.CompanyDBDAO;
++import com.ar.dbdao.CouponDBDAO;
++import com.ar.dbdao.CustomerCouponDBDAO;
++import com.ar.dbdao.CustomerDBDAO;
++import com.ar.exceptions.CouponSystemException;
++
++import java.sql.SQLException;
++
++public abstract class ClientFacade {
++    protected CompanyDAO companyDAO;
++    protected CustomerDAO customerDAO;
++    protected CouponDAO couponDAO;
++    protected CustomerCouponDao customerCouponDAO;
++
++    public ClientFacade() {
++        companyDAO = new CompanyDBDAO();
++        customerDAO = new CustomerDBDAO();
++        couponDAO = new CouponDBDAO();
++        customerCouponDAO = new CustomerCouponDBDAO();
++    }
++
++    public abstract boolean login(String email, String password) throws SQLException, CouponSystemException;
++
++}
+Index: src/main/java/com/ar/facades/AdminFacade.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/ar/facades/AdminFacade.java b/src/main/java/com/ar/facades/AdminFacade.java
+new file mode 100644
+--- /dev/null	(date 1625074450491)
++++ b/src/main/java/com/ar/facades/AdminFacade.java	(date 1625074450491)
+@@ -0,0 +1,95 @@
++package com.ar.facades;
++
++import com.ar.beans.Company;
++import com.ar.beans.Coupon;
++import com.ar.beans.Customer;
++import com.ar.dbdao.IsExistsQuery;
++import com.ar.exceptions.CouponSystemException;
++import com.ar.exceptions.ErrorMsg;
++
++import java.sql.SQLException;
++import java.util.List;
++import java.util.function.Consumer;
++
++public class AdminFacade extends ClientFacade {
++
++    @Override
++    public boolean login(String email, String password) {
++        return email.equals("admin@admin.com") && password.equals("admin");
++    }
++
++    //***********Company************************************
++    public void addCompany(Company company) throws CouponSystemException, SQLException {
++        if (this.companyDAO.isCompanyExists(IsExistsQuery.COMPANY_NAME_OR_EMAIL, company.getName(),company.getEmail())) {
++            throw new CouponSystemException(ErrorMsg.COMPANY_NAME_OR_NAME_EXISTS);
++        }
++        companyDAO.addEntity(company);
++    }
++
++    public void updateCompany(Company company) throws SQLException, CouponSystemException {
++        Company toUpdate = this.companyDAO.getOneEntity(company.getId());
++        if (toUpdate == null) {
++            throw new CouponSystemException(String.format( ErrorMsg.COMPANY_ID_NOT_EXISTS.getMessage(),company.getId()));
++        }
++        if (!toUpdate.getName().equals(company.getName())) {
++            throw new CouponSystemException(ErrorMsg.COMPANY_NAME_NOT_UPDATABLE);
++        }
++        this.companyDAO.updateEntity(company);
++    }
++
++    public boolean deleteCompany(int companyID) throws SQLException, CouponSystemException {
++        this.couponDAO.deletePurchaseCompany(companyID);
++        this.couponDAO.deleteCouponsCompany(companyID);
++        this.companyDAO.deleteEntity(companyID);
++        return true;
++     }
++
++    public List<Company> getAllCompanies() throws SQLException, CouponSystemException {
++        return this.companyDAO.getAllEntities();
++    }
++
++    public Company getOneCompany(int companyID) throws SQLException, CouponSystemException {
++         return this.companyDAO.getOneEntity(companyID);
++    }
++
++    public List<Coupon> getCompanyCoupons(int companyId) throws SQLException {
++        return this.couponDAO.getCouponsCompany(companyId);
++    }
++
++    public List<Coupon> getCompanyPurcase(int companyId) throws SQLException {
++        return this.couponDAO.getCouponsCompany(companyId);
++    }
++
++    //***********Customer************************************
++
++    public List<Customer> getAllCustomers() throws SQLException, CouponSystemException {
++        return this.customerDAO.getAllEntities();
++    }
++
++    public Customer getOneCustomer(int customerId) throws SQLException, CouponSystemException {
++        return this.customerDAO.getOneEntity(customerId);
++    }
++
++    public void addCustomer(Customer customer) throws CouponSystemException, SQLException {
++        if (this.customerDAO.isCustomerExists(customer.getEmail())) {
++            throw new CouponSystemException(ErrorMsg.CUSTOMER_EMAIL_EXISTS);
++        }
++        customerDAO.addEntity(customer);
++    }
++
++    public void updateCustomer(Customer customer) throws CouponSystemException, SQLException {
++        if (this.customerDAO.isCustomerExists(customer.getEmail(), customer.getId())) {
++            throw new CouponSystemException(ErrorMsg.CUSTOMER_EMAIL_EXISTS2);
++        }
++        customerDAO.updateEntity(customer);
++    }
++
++    public List<Coupon> getCustomerCoupons(int customerId) throws SQLException {
++        return this.couponDAO.getCouponsCustomer(customerId);
++    }
++
++    public void deleteCustomer(int customerID) throws SQLException, CouponSystemException {
++        this.couponDAO.deleteCouponCustomer(customerID);
++        this.customerDAO.deleteEntity(customerID);
++    }
++}
+Index: CouponsPhase1.iml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/CouponsPhase1.iml b/CouponsPhase1.iml
+new file mode 100644
+--- /dev/null	(date 1623658882380)
++++ b/CouponsPhase1.iml	(date 1623658882380)
+@@ -0,0 +1,2 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<module type="JAVA_MODULE" version="4" />
+\ No newline at end of file
+Index: src/main/java/com/ar/dbdao/CategoryDBDAO.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/ar/dbdao/CategoryDBDAO.java b/src/main/java/com/ar/dbdao/CategoryDBDAO.java
+new file mode 100644
+--- /dev/null	(date 1624038773963)
++++ b/src/main/java/com/ar/dbdao/CategoryDBDAO.java	(date 1624038773963)
+@@ -0,0 +1,21 @@
++package com.ar.dbdao;
++
++import com.ar.beans.Category;
++import com.ar.dao.CategoryDAO;
++import com.ar.utils.DBUtils;
++
++import java.sql.SQLException;
++import java.util.HashMap;
++import java.util.Map;
++
++public class CategoryDBDAO implements CategoryDAO {
++
++    private static final String QUERY_INSERT = "INSERT INTO `bhp_coupon`.`categories` (`name`) VALUES (?);";
++    @Override
++    public void addCategory(Category category) throws SQLException {
++        Map<Integer, Object> map = new HashMap<>();
++        map.put(1, category.name());
++
++        DBUtils.runStatement(QUERY_INSERT, map);
++    }
++}
+Index: src/main/java/com/ar/dao/CustomerCouponDao.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/ar/dao/CustomerCouponDao.java b/src/main/java/com/ar/dao/CustomerCouponDao.java
+new file mode 100644
+--- /dev/null	(date 1625030947480)
++++ b/src/main/java/com/ar/dao/CustomerCouponDao.java	(date 1625030947480)
+@@ -0,0 +1,16 @@
++package com.ar.dao;
++
++import com.ar.beans.Category;
++import com.ar.exceptions.CouponSystemException;
++
++import java.sql.SQLException;
++import java.util.List;
++import java.util.Optional;
++
++public interface CustomerCouponDao {
++    public void deleteCouponPurchase(int couponID) throws SQLException;
++    public List<Integer> getCustomerPurchases(int customerId) throws SQLException;
++    public List<Integer> getCustomerPurchases(int customerId, int categoryId) throws SQLException;
++    public void addCouponPurchase(int couponId, int customerId) throws SQLException;
++    public boolean isPurchaseExists(int couponId, int customerId) throws SQLException;
++}
+Index: src/main/java/com/ar/db/DatabaseManager.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/ar/db/DatabaseManager.java b/src/main/java/com/ar/db/DatabaseManager.java
+new file mode 100644
+--- /dev/null	(date 1623985278562)
++++ b/src/main/java/com/ar/db/DatabaseManager.java	(date 1623985278562)
+@@ -0,0 +1,105 @@
++package com.ar.db;
++
++import com.ar.beans.Category;
++import com.ar.dao.CategoryDAO;
++import com.ar.dao.CustomerDAO;
++import com.ar.dbdao.CategoryDBDAO;
++import com.ar.dbdao.CustomerDBDAO;
++import com.ar.utils.DBUtils;
++
++import java.sql.SQLException;
++
++public class DatabaseManager {
++    public static final String url = "jdbc:mysql://localhost:3306" +
++            "?createDatabaseIfNotExist=FALSE" +
++            "&useTimezone=TRUE" +
++            "&serverTimezone=UTC";
++    public static final String username = "root";
++    public static final String password = "AllaRoyz61$";
++
++    private static final String CREATE_SCHEMA = "CREATE SCHEMA `bhp_coupon`";
++    private static final String DROP_SCHEMA = "DROP SCHEMA `bhp_coupon`";
++
++    private static final String CREATE_TABLE_COMPANIES = "CREATE TABLE `bhp_coupon`.`companies` (\n" +
++            "  `id` INT NOT NULL AUTO_INCREMENT,\n" +
++            "  `name` VARCHAR(45) NOT NULL,\n" +
++            "  `email` VARCHAR(45) NOT NULL,\n" +
++            "  `password` VARCHAR(45) NOT NULL,\n" +
++            "  PRIMARY KEY (`id`));";
++    private static final String DROP_TABLE_COMPANIES = "DROP TABLE `bhp_coupon`.`companies`";
++
++    private static final String CREATE_TABLE_CUSTOMERS = "CREATE TABLE `bhp_coupon`.`customers` (\n" +
++            "  `id` INT NOT NULL AUTO_INCREMENT,\n" +
++            "  `first_name` VARCHAR(45) NOT NULL,\n" +
++            "  `last_name` VARCHAR(45) NOT NULL,\n" +
++            "  `email` VARCHAR(45) NOT NULL,\n" +
++            "  `password` VARCHAR(45) NOT NULL,\n" +
++            "  PRIMARY KEY (`id`));";
++    private static final String DROP_TABLE_CUSTOMERS = "DROP TABLE `bhp_coupon`.`customers`";
++
++    private static final String CREATE_TABLE_CATEGORIES = "CREATE TABLE `bhp_coupon`.`categories` (\n" +
++            "  `id` INT NOT NULL AUTO_INCREMENT,\n" +
++            "  `name` VARCHAR(45) NOT NULL,\n" +
++            "  PRIMARY KEY (`id`));\n";
++    private static final String DROP_TABLE_CATEGORIES = "DROP TABLE `bhp_coupon`.`categories`";
++
++    private static final String CREATE_TABLE_COUPONS = "CREATE TABLE `bhp_coupon`.`coupons` (\n" +
++            "  `id` INT NOT NULL AUTO_INCREMENT,\n" +
++            "  `company_id` INT NOT NULL,\n" +
++            "  `category_id` INT NOT NULL,\n" +
++            "  `title` VARCHAR(45) NOT NULL,\n" +
++            "  `description` VARCHAR(200) NOT NULL,\n" +
++            "  `start_date` DATE NOT NULL,\n" +
++            "  `end_date` DATE NOT NULL,\n" +
++            "  `amount` INT NOT NULL,\n" +
++            "  `price` DOUBLE NOT NULL,\n" +
++            "  `image` VARCHAR(200) NOT NULL,\n" +
++            "  PRIMARY KEY (`id`),\n" +
++            "  INDEX `company_id_idx` (`company_id` ASC) VISIBLE,\n" +
++            "  INDEX `category_id_idx` (`category_id` ASC) VISIBLE,\n" +
++            "  CONSTRAINT `company_id`\n" +
++            "    FOREIGN KEY (`company_id`)\n" +
++            "    REFERENCES `bhp_coupon`.`companies` (`id`)\n" +
++            "    ON DELETE NO ACTION\n" +
++            "    ON UPDATE NO ACTION,\n" +
++            "  CONSTRAINT `category_id`\n" +
++            "    FOREIGN KEY (`category_id`)\n" +
++            "    REFERENCES `bhp_coupon`.`categories` (`id`)\n" +
++            "    ON DELETE NO ACTION\n" +
++            "    ON UPDATE NO ACTION);";
++    private static final String DROP_TABLE_COUPONS = "DROP TABLE `bhp_coupon`.`coupons`";
++
++    private static final String CREATE_TABLE_CUSTOMERS_COUPONS = "CREATE TABLE `bhp_coupon`.`customers_coupons` (\n" +
++            "  `customer_id` INT NOT NULL,\n" +
++            "  `coupon_id` INT NOT NULL,\n" +
++            "  PRIMARY KEY (`customer_id`, `coupon_id`),\n" +
++            "  INDEX `coupon_id_idx` (`coupon_id` ASC) VISIBLE,\n" +
++            "  CONSTRAINT `customer_id`\n" +
++            "    FOREIGN KEY (`customer_id`)\n" +
++            "    REFERENCES `bhp_coupon`.`customers` (`id`)\n" +
++            "    ON DELETE NO ACTION\n" +
++            "    ON UPDATE NO ACTION,\n" +
++            "  CONSTRAINT `coupon_id`\n" +
++            "    FOREIGN KEY (`coupon_id`)\n" +
++            "    REFERENCES `bhp_coupon`.`coupons` (`id`)\n" +
++            "    ON DELETE NO ACTION\n" +
++            "    ON UPDATE NO ACTION);\n";
++    private static final String DROP_TABLE_CUSTOMERS_COUPONS = "DROP TABLE `bhp_coupon`.`customers_coupons`";
++
++    public static void dropAndCreate() throws SQLException {
++
++        DBUtils.runStatement(DROP_SCHEMA);
++        DBUtils.runStatement(CREATE_SCHEMA);
++        DBUtils.runStatement(CREATE_TABLE_COMPANIES);
++        DBUtils.runStatement(CREATE_TABLE_CUSTOMERS);
++        DBUtils.runStatement(CREATE_TABLE_CATEGORIES);
++        DBUtils.runStatement(CREATE_TABLE_COUPONS);
++        DBUtils.runStatement(CREATE_TABLE_CUSTOMERS_COUPONS);
++
++        CategoryDBDAO categoriesDAO = new CategoryDBDAO();
++        for (Category c: Category.values()) {
++            categoriesDAO.addCategory(c);
++        }
++    }
++
++}
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/misc.xml b/.idea/misc.xml
+new file mode 100644
+--- /dev/null	(date 1623658875677)
++++ b/.idea/misc.xml	(date 1623658875677)
+@@ -0,0 +1,14 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="ExternalStorageConfigurationManager" enabled="true" />
++  <component name="MavenProjectsManager">
++    <option name="originalFiles">
++      <list>
++        <option value="$PROJECT_DIR$/pom.xml" />
++      </list>
++    </option>
++  </component>
++  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="11" project-jdk-type="JavaSDK">
++    <output url="file://$PROJECT_DIR$/out" />
++  </component>
++</project>
+\ No newline at end of file
+Index: .idea/compiler.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/compiler.xml b/.idea/compiler.xml
+new file mode 100644
+--- /dev/null	(date 1625158926333)
++++ b/.idea/compiler.xml	(date 1625158926333)
+@@ -0,0 +1,13 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="CompilerConfiguration">
++    <annotationProcessing>
++      <profile name="Maven default annotation processors profile" enabled="true">
++        <sourceOutputDir name="target/generated-sources/annotations" />
++        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
++        <outputRelativeToContentRoot value="true" />
++        <module name="CouponsPhase1" />
++      </profile>
++    </annotationProcessing>
++  </component>
++</project>
+\ No newline at end of file
+Index: src/main/java/com/ar/exceptions/ErrorMsg.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/ar/exceptions/ErrorMsg.java b/src/main/java/com/ar/exceptions/ErrorMsg.java
+new file mode 100644
+--- /dev/null	(date 1625023565588)
++++ b/src/main/java/com/ar/exceptions/ErrorMsg.java	(date 1625023565588)
+@@ -0,0 +1,51 @@
++package com.ar.exceptions;
++
++public enum ErrorMsg {
++    COMPANY_NAME_OR_NAME_EXISTS("Cannot add company with existing company name or email"),
++    COMPANY_ID_NOT_EXISTS("Cannot update not existing company"),
++    COMPANY_NUMBER_NOT_EXISTS("Cannot create new company"),
++    COMPANY_ID_NOT_UPDATABLE("The company id could not be updated."),
++    COMPANY_NAME_NOT_UPDATABLE("The company name could not be updated."),
++    COMPANY_COUPON_IS_EXISTS("Cannot add or update coupon to company with existing title."),
++    COMPANY_EMAIL_AND_PASSWORD_EXISTS("Cannot add company with existing email and password"),
++    COMPANY_EMAIL_OR_PASSWORD_EXISTS("Cannot or company with existing email or password"),
++    SQL_ERROR("Something is wrong is SQL"),
++    BAD_ADMIN_LOGIN("Bad login as admin"),
++    OK_ADMIN_LOGIN("Login as Adminitrator"),
++    OK_CUSTOMER_LOGIN("Login as customer"),
++    OK_COMPANY_LOGIN("Login as company"),
++    BAD_COMPANY_LOGIN("Bad login as company"),
++    BAD_CUSTOMER_LOGIN("Bad login as customer"),
++    ENTITY_IS_EXISTS("%s with mail %s and password %s is exists!"),
++    ENTITY_IS_NEW ("%s with mail %s and password %s is new!"),
++    CUSTOMER_EMAIL_EXISTS("Cannot add customer with existing email"),
++    CUSTOMER_ID_NOT_UPDATABLE("Cannot update customer id"),
++    CUSTOMER_EMAIL_EXISTS2("Cannot update customer email to existing email"),
++    COUPON_NUMBER_NOT_EXISTS("Cannot create new coupon"),
++    COUPON_ID_NOT_EXISTS("Cannot update not existing coupon"),
++    COUPON_COMPANY_ID_NOT_UPDATABLE("The company id could not be updated."),
++    COUPON_NOT_BELONG_TO_COMPANY("Cannot delete coupon belonging to another company"),
++    CUSTOMER_HAS_COUPON_ALREADY("Customer has the coupon already"),
++    COUPON_OUT_OF_STOCK("The coupon is out of stock."),
++    COUPON_IS_EXPIRED("The coupon is expired."),
++    COUPON_NOT_EXISTS("The coupon does not exist")
++    ;
++
++    private String message;
++
++    private ErrorMsg(String message) {
++        this.message = message;
++    }
++
++    public void setMessage(String msg) {
++        this.message = msg;
++    }
++
++    public String getMessage(ErrorMsg errors) {
++        return message;
++    }
++
++    public String getMessage() {
++        return this.message;
++    }
++}
+Index: src/main/java/com/ar/dao/CouponDAO.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/ar/dao/CouponDAO.java b/src/main/java/com/ar/dao/CouponDAO.java
+new file mode 100644
+--- /dev/null	(date 1625026027159)
++++ b/src/main/java/com/ar/dao/CouponDAO.java	(date 1625026027159)
+@@ -0,0 +1,30 @@
++package com.ar.dao;
++
++import com.ar.beans.Category;
++import com.ar.beans.Company;
++import com.ar.beans.Coupon;
++import com.ar.beans.Customer;
++
++import java.sql.Date;
++import java.sql.SQLException;
++import java.util.List;
++
++public interface CouponDAO extends SystemDAO<Coupon, Integer> {
++
++  //  void addCouponPurchase(int customerID, int couponID) throws SQLException;
++    void deleteCouponPurchase(int customerID, int couponID) throws SQLException;
++//    void deleteCouponPurchase(int couponID) throws SQLException;
++    void deleteCouponCustomer(int customerID) throws SQLException;
++    void deletePurchaseCompany(int companyID) throws SQLException;
++    void deleteCouponsCompany (int companyID) throws SQLException;
++    void deletePurchaseCoupon(int couponID) throws SQLException;
++    void deleteCouponCompany (int companyID, int couponID) throws SQLException;
++
++    List<Coupon> getCouponsCustomer(int customerID) throws SQLException;
++    List<Coupon> getCouponsCompany(int companyID) throws SQLException;
++    List<Coupon> getCouponsCompany(int companyID, Category category) throws SQLException;
++    List<Coupon> getCouponsCompanyPrice(int companyID, double maxPrice) throws SQLException;
++
++    List<Coupon> getAllExpiredCouponsByDate (Date expiredDate) throws SQLException;
++
++}
+Index: src/main/java/com/ar/beans/Category.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/ar/beans/Category.java b/src/main/java/com/ar/beans/Category.java
+new file mode 100644
+--- /dev/null	(date 1624711373920)
++++ b/src/main/java/com/ar/beans/Category.java	(date 1624711373920)
+@@ -0,0 +1,10 @@
++package com.ar.beans;
++
++public enum Category {
++    FOOD,
++    RESTAURANT,
++    FASHION,
++    PC;
++
++    public final int value = 1 + ordinal();
++}
+Index: src/main/java/com/ar/datafactory/CouponFactory.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/ar/datafactory/CouponFactory.java b/src/main/java/com/ar/datafactory/CouponFactory.java
+new file mode 100644
+--- /dev/null	(date 1625025647499)
++++ b/src/main/java/com/ar/datafactory/CouponFactory.java	(date 1625025647499)
+@@ -0,0 +1,56 @@
++package com.ar.datafactory;
++
++import com.ar.beans.Category;
++import com.ar.beans.Coupon;
++import com.ar.exceptions.CouponSystemException;
++import com.ar.exceptions.ErrorMsg;
++
++import java.sql.Date;
++import java.time.LocalDate;
++import java.util.Random;
++
++public class CouponFactory {
++
++    private static final String[] titles = {"TOZO T6","Security Camera","KouKou Men pants","AYMA Women","Lavazza Super Crema",
++            "Extra Large Rock Candy","Victor Allen Breakfast", "Roberto Vinchi lunch"};
++    private static final String[] desriptions = {"Wireless Earbuds","Outdoor, Voger 360","Elasticity Capri-Shorts",
++            "Packable Down Jacket", "Whole Bean Coffee",
++            "Sticks 12 Grape","Seatle Blend", "Full lunch"};
++    private static final int[] amount = {20,0,10,40,50,25,100,50};
++    private static final double[] price = {25.99,129.99,30.00,250.99,29.49,8.25,100,19.99};
++
++    public static Coupon getOne(int couponNo, int companyId, Category category) throws CouponSystemException {
++        if (couponNo >= titles.length)
++            throw new CouponSystemException(ErrorMsg.COUPON_NUMBER_NOT_EXISTS);
++
++        return new Coupon(
++                companyId,
++                category,
++                titles[couponNo],
++                desriptions[couponNo],
++                Date.valueOf(LocalDate.now()),
++                Date.valueOf(LocalDate.now().plusMonths(1)),
++                amount[couponNo],
++                price[couponNo],
++//                new Random().nextInt(20) + 1,
++//                1 +(100-1) *(new Random().nextDouble() ),
++                "image" + titles[couponNo]);
++    }
++
++    public static Coupon getOneExpired(int couponNo, int companyId, Category category) throws CouponSystemException {
++        if (couponNo >= titles.length)
++            throw new CouponSystemException(ErrorMsg.COUPON_NUMBER_NOT_EXISTS);
++
++        return new Coupon(
++                companyId,
++                category,
++                titles[couponNo],
++                desriptions[couponNo],
++                Date.valueOf(LocalDate.now().plusMonths(-1)),
++                Date.valueOf(LocalDate.now().plusDays(-1)),
++                10,
++                price[couponNo],
++                "image" + titles[couponNo]);
++    }
++
++}
+Index: src/main/java/com/ar/beans/Coupon.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/ar/beans/Coupon.java b/src/main/java/com/ar/beans/Coupon.java
+new file mode 100644
+--- /dev/null	(date 1624706780261)
++++ b/src/main/java/com/ar/beans/Coupon.java	(date 1624706780261)
+@@ -0,0 +1,131 @@
++package com.ar.beans;
++
++import java.sql.Date;
++import java.text.DecimalFormat;
++
++public class Coupon {
++    private int id;
++    private int companyId;
++    private Category category;
++    private String title;
++    private String description;
++    private Date startDate;
++    private Date endDate;
++    private int amount;
++    private double price;
++    private String image;
++
++    private static final DecimalFormat df2 = new DecimalFormat(("#.##"));
++    public Coupon(int id, int companyId, Category category, String title, String description, Date startDate, Date emdDate, int amount, double price, String image) {
++        this(companyId, category, title, description, startDate, emdDate, amount, price, image);
++        this.id = id;
++        }
++
++    public Coupon(int companyId, Category category, String title, String description, Date startDate, Date emdDate, int amount, double price, String image) {
++        this.companyId = companyId;
++        this.category = category;
++        this.title = title;
++        this.description = description;
++        this.startDate = startDate;
++        this.endDate = emdDate;
++        this.amount = amount;
++        this.price = price;
++        this.image = image;
++    }
++
++    public int getId() {
++        return id;
++    }
++
++    public void setId(int id) {
++        this.id = id;
++    }
++
++    public int getCompanyId() {
++        return companyId;
++    }
++
++    public void setCompanyId(int companyId) {
++        this.companyId = companyId;
++    }
++
++    public Category getCategory() {
++        return category;
++    }
++
++    public void setCategory(Category category) {
++        this.category = category;
++    }
++
++    public String getTitle() {
++        return title;
++    }
++
++    public void setTitle(String title) {
++        this.title = title;
++    }
++
++    public String getDescription() {
++        return description;
++    }
++
++    public void setDescription(String description) {
++        this.description = description;
++    }
++
++    public Date getStartDate() {
++        return startDate;
++    }
++
++    public void setStartDate(Date startDate) {
++        this.startDate = startDate;
++    }
++
++    public Date getEndDate() {
++        return endDate;
++    }
++
++    public void setEndDate(Date endDate) {
++        this.endDate = endDate;
++    }
++
++    public int getAmount() {
++        return amount;
++    }
++
++    public void setAmount(int amount) {
++        this.amount = amount;
++    }
++
++    public double getPrice() {
++        return price;
++    }
++
++    public void setPrice(double price) {
++        this.price = price;
++    }
++
++    public String getImage() {
++        return image;
++    }
++
++    public void setImage(String image) {
++        this.image = image;
++    }
++
++    @Override
++    public String toString() {
++        return "Coupon{" +
++                "id=" + id +
++                ", companyId=" + companyId +
++                ", category=" + category +
++                ", title='" + title + '\'' +
++                ", description='" + description + '\'' +
++                ", startDate=" + startDate +
++                ", endDate=" + endDate +
++                ", amount=" + amount +
++                ", price=" + df2.format( price) +
++                ", image='" + image + '\'' +
++                '}';
++    }
++}
+Index: src/main/java/com/ar/exceptions/CouponSystemException.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/ar/exceptions/CouponSystemException.java b/src/main/java/com/ar/exceptions/CouponSystemException.java
+new file mode 100644
+--- /dev/null	(date 1624432440158)
++++ b/src/main/java/com/ar/exceptions/CouponSystemException.java	(date 1624432440158)
+@@ -0,0 +1,11 @@
++package com.ar.exceptions;
++
++public class CouponSystemException extends Exception {
++    public CouponSystemException(String errorMessage) {
++         super(errorMessage);
++    }
++
++    public CouponSystemException(ErrorMsg errors) {
++        super(errors.getMessage(errors));
++    }
++}
+Index: src/main/java/com/ar/dao/CategoryDAO.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/ar/dao/CategoryDAO.java b/src/main/java/com/ar/dao/CategoryDAO.java
+new file mode 100644
+--- /dev/null	(date 1624038773995)
++++ b/src/main/java/com/ar/dao/CategoryDAO.java	(date 1624038773995)
+@@ -0,0 +1,9 @@
++package com.ar.dao;
++
++import com.ar.beans.Category;
++
++import java.sql.SQLException;
++
++public interface CategoryDAO {
++    void addCategory(Category category) throws SQLException;
++}
+Index: .idea/uiDesigner.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/uiDesigner.xml b/.idea/uiDesigner.xml
+new file mode 100644
+--- /dev/null	(date 1624418614753)
++++ b/.idea/uiDesigner.xml	(date 1624418614753)
+@@ -0,0 +1,124 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="Palette2">
++    <group name="Swing">
++      <item class="com.intellij.uiDesigner.HSpacer" tooltip-text="Horizontal Spacer" icon="/com/intellij/uiDesigner/icons/hspacer.png" removable="false" auto-create-binding="false" can-attach-label="false">
++        <default-constraints vsize-policy="1" hsize-policy="6" anchor="0" fill="1" />
++      </item>
++      <item class="com.intellij.uiDesigner.VSpacer" tooltip-text="Vertical Spacer" icon="/com/intellij/uiDesigner/icons/vspacer.png" removable="false" auto-create-binding="false" can-attach-label="false">
++        <default-constraints vsize-policy="6" hsize-policy="1" anchor="0" fill="2" />
++      </item>
++      <item class="javax.swing.JPanel" icon="/com/intellij/uiDesigner/icons/panel.png" removable="false" auto-create-binding="false" can-attach-label="false">
++        <default-constraints vsize-policy="3" hsize-policy="3" anchor="0" fill="3" />
++      </item>
++      <item class="javax.swing.JScrollPane" icon="/com/intellij/uiDesigner/icons/scrollPane.png" removable="false" auto-create-binding="false" can-attach-label="true">
++        <default-constraints vsize-policy="7" hsize-policy="7" anchor="0" fill="3" />
++      </item>
++      <item class="javax.swing.JButton" icon="/com/intellij/uiDesigner/icons/button.png" removable="false" auto-create-binding="true" can-attach-label="false">
++        <default-constraints vsize-policy="0" hsize-policy="3" anchor="0" fill="1" />
++        <initial-values>
++          <property name="text" value="Button" />
++        </initial-values>
++      </item>
++      <item class="javax.swing.JRadioButton" icon="/com/intellij/uiDesigner/icons/radioButton.png" removable="false" auto-create-binding="true" can-attach-label="false">
++        <default-constraints vsize-policy="0" hsize-policy="3" anchor="8" fill="0" />
++        <initial-values>
++          <property name="text" value="RadioButton" />
++        </initial-values>
++      </item>
++      <item class="javax.swing.JCheckBox" icon="/com/intellij/uiDesigner/icons/checkBox.png" removable="false" auto-create-binding="true" can-attach-label="false">
++        <default-constraints vsize-policy="0" hsize-policy="3" anchor="8" fill="0" />
++        <initial-values>
++          <property name="text" value="CheckBox" />
++        </initial-values>
++      </item>
++      <item class="javax.swing.JLabel" icon="/com/intellij/uiDesigner/icons/label.png" removable="false" auto-create-binding="false" can-attach-label="false">
++        <default-constraints vsize-policy="0" hsize-policy="0" anchor="8" fill="0" />
++        <initial-values>
++          <property name="text" value="Label" />
++        </initial-values>
++      </item>
++      <item class="javax.swing.JTextField" icon="/com/intellij/uiDesigner/icons/textField.png" removable="false" auto-create-binding="true" can-attach-label="true">
++        <default-constraints vsize-policy="0" hsize-policy="6" anchor="8" fill="1">
++          <preferred-size width="150" height="-1" />
++        </default-constraints>
++      </item>
++      <item class="javax.swing.JPasswordField" icon="/com/intellij/uiDesigner/icons/passwordField.png" removable="false" auto-create-binding="true" can-attach-label="true">
++        <default-constraints vsize-policy="0" hsize-policy="6" anchor="8" fill="1">
++          <preferred-size width="150" height="-1" />
++        </default-constraints>
++      </item>
++      <item class="javax.swing.JFormattedTextField" icon="/com/intellij/uiDesigner/icons/formattedTextField.png" removable="false" auto-create-binding="true" can-attach-label="true">
++        <default-constraints vsize-policy="0" hsize-policy="6" anchor="8" fill="1">
++          <preferred-size width="150" height="-1" />
++        </default-constraints>
++      </item>
++      <item class="javax.swing.JTextArea" icon="/com/intellij/uiDesigner/icons/textArea.png" removable="false" auto-create-binding="true" can-attach-label="true">
++        <default-constraints vsize-policy="6" hsize-policy="6" anchor="0" fill="3">
++          <preferred-size width="150" height="50" />
++        </default-constraints>
++      </item>
++      <item class="javax.swing.JTextPane" icon="/com/intellij/uiDesigner/icons/textPane.png" removable="false" auto-create-binding="true" can-attach-label="true">
++        <default-constraints vsize-policy="6" hsize-policy="6" anchor="0" fill="3">
++          <preferred-size width="150" height="50" />
++        </default-constraints>
++      </item>
++      <item class="javax.swing.JEditorPane" icon="/com/intellij/uiDesigner/icons/editorPane.png" removable="false" auto-create-binding="true" can-attach-label="true">
++        <default-constraints vsize-policy="6" hsize-policy="6" anchor="0" fill="3">
++          <preferred-size width="150" height="50" />
++        </default-constraints>
++      </item>
++      <item class="javax.swing.JComboBox" icon="/com/intellij/uiDesigner/icons/comboBox.png" removable="false" auto-create-binding="true" can-attach-label="true">
++        <default-constraints vsize-policy="0" hsize-policy="2" anchor="8" fill="1" />
++      </item>
++      <item class="javax.swing.JTable" icon="/com/intellij/uiDesigner/icons/table.png" removable="false" auto-create-binding="true" can-attach-label="false">
++        <default-constraints vsize-policy="6" hsize-policy="6" anchor="0" fill="3">
++          <preferred-size width="150" height="50" />
++        </default-constraints>
++      </item>
++      <item class="javax.swing.JList" icon="/com/intellij/uiDesigner/icons/list.png" removable="false" auto-create-binding="true" can-attach-label="false">
++        <default-constraints vsize-policy="6" hsize-policy="2" anchor="0" fill="3">
++          <preferred-size width="150" height="50" />
++        </default-constraints>
++      </item>
++      <item class="javax.swing.JTree" icon="/com/intellij/uiDesigner/icons/tree.png" removable="false" auto-create-binding="true" can-attach-label="false">
++        <default-constraints vsize-policy="6" hsize-policy="6" anchor="0" fill="3">
++          <preferred-size width="150" height="50" />
++        </default-constraints>
++      </item>
++      <item class="javax.swing.JTabbedPane" icon="/com/intellij/uiDesigner/icons/tabbedPane.png" removable="false" auto-create-binding="true" can-attach-label="false">
++        <default-constraints vsize-policy="3" hsize-policy="3" anchor="0" fill="3">
++          <preferred-size width="200" height="200" />
++        </default-constraints>
++      </item>
++      <item class="javax.swing.JSplitPane" icon="/com/intellij/uiDesigner/icons/splitPane.png" removable="false" auto-create-binding="false" can-attach-label="false">
++        <default-constraints vsize-policy="3" hsize-policy="3" anchor="0" fill="3">
++          <preferred-size width="200" height="200" />
++        </default-constraints>
++      </item>
++      <item class="javax.swing.JSpinner" icon="/com/intellij/uiDesigner/icons/spinner.png" removable="false" auto-create-binding="true" can-attach-label="true">
++        <default-constraints vsize-policy="0" hsize-policy="6" anchor="8" fill="1" />
++      </item>
++      <item class="javax.swing.JSlider" icon="/com/intellij/uiDesigner/icons/slider.png" removable="false" auto-create-binding="true" can-attach-label="false">
++        <default-constraints vsize-policy="0" hsize-policy="6" anchor="8" fill="1" />
++      </item>
++      <item class="javax.swing.JSeparator" icon="/com/intellij/uiDesigner/icons/separator.png" removable="false" auto-create-binding="false" can-attach-label="false">
++        <default-constraints vsize-policy="6" hsize-policy="6" anchor="0" fill="3" />
++      </item>
++      <item class="javax.swing.JProgressBar" icon="/com/intellij/uiDesigner/icons/progressbar.png" removable="false" auto-create-binding="true" can-attach-label="false">
++        <default-constraints vsize-policy="0" hsize-policy="6" anchor="0" fill="1" />
++      </item>
++      <item class="javax.swing.JToolBar" icon="/com/intellij/uiDesigner/icons/toolbar.png" removable="false" auto-create-binding="false" can-attach-label="false">
++        <default-constraints vsize-policy="0" hsize-policy="6" anchor="0" fill="1">
++          <preferred-size width="-1" height="20" />
++        </default-constraints>
++      </item>
++      <item class="javax.swing.JToolBar$Separator" icon="/com/intellij/uiDesigner/icons/toolbarSeparator.png" removable="false" auto-create-binding="false" can-attach-label="false">
++        <default-constraints vsize-policy="0" hsize-policy="0" anchor="0" fill="1" />
++      </item>
++      <item class="javax.swing.JScrollBar" icon="/com/intellij/uiDesigner/icons/scrollbar.png" removable="false" auto-create-binding="true" can-attach-label="false">
++        <default-constraints vsize-policy="6" hsize-policy="0" anchor="0" fill="2" />
++      </item>
++    </group>
++  </component>
++</project>
+\ No newline at end of file
+Index: src/main/java/com/ar/dbdao/CompanyDBDAO.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/ar/dbdao/CompanyDBDAO.java b/src/main/java/com/ar/dbdao/CompanyDBDAO.java
+new file mode 100644
+--- /dev/null	(date 1625077625393)
++++ b/src/main/java/com/ar/dbdao/CompanyDBDAO.java	(date 1625077625393)
+@@ -0,0 +1,86 @@
++package com.ar.dbdao;
++
++import com.ar.beans.Company;
++import com.ar.dao.CompanyDAO;
++import com.ar.exceptions.CouponSystemException;
++import com.ar.exceptions.ErrorMsg;
++import com.ar.utils.DBUtils;
++import com.ar.utils.MapUtils;
++
++import java.sql.ResultSet;
++import java.sql.SQLException;
++import java.util.ArrayList;
++import java.util.HashMap;
++import java.util.List;
++import java.util.Map;
++
++public class CompanyDBDAO implements CompanyDAO {
++
++    private static final String QUERY_INSERT = "INSERT INTO `bhp_coupon`.`companies` (`name`, `email`, `password`) VALUES (?, ?, ?);";
++
++    private static final String QUERY_UPDATE = "UPDATE `bhp_coupon`.`companies` SET `name` = ?, `email` = ?, `password` = ? WHERE (`id` = ?);";
++    private static final String QUERY_DELETE = "DELETE FROM `bhp_coupon`.`companies` WHERE (`id` = ?);";
++    private static final String QUERY_GET_SINGLE = "SELECT * FROM `bhp_coupon`.`companies` WHERE (`id` = ?);";
++    private static final String QUERY_GET_ALL = "SELECT * FROM `bhp_coupon`.`companies`";
++    private static final String QUERY_CHECK_IS_EXISTS_Mail_Or_Password = "SELECT id FROM `bhp_coupon`.`companies` WHERE (`email` = ? OR `password` = ? );";
++    private static final String QUERY_CHECK_IS_EXISTS_Mail_And_Password = "SELECT id FROM `bhp_coupon`.`companies` WHERE (`email` = ? AND `password` = ? );";
++    @Override
++    public void addEntity(Company company) throws SQLException {
++        DBUtils.runStatement(QUERY_INSERT, MapUtils.getMapCompany(company));
++    }
++
++    @Override
++    public void updateEntity(Company company) throws SQLException {
++        DBUtils.runStatement(QUERY_UPDATE, MapUtils.getMapCompanyWithId( company));
++    }
++
++    @Override
++    public void deleteEntity(Integer id) throws SQLException {
++        DBUtils.runStatement(QUERY_DELETE, MapUtils.getMapId(id));
++    }
++
++    @Override
++    public Company getOneEntity(Integer id) throws SQLException{
++        Company company = null;
++        ResultSet resultSet = DBUtils.runStatementWithResultSet(QUERY_GET_SINGLE, MapUtils.getMapId(id));
++        if (resultSet.next())
++            company = MapUtils.getCompanyWithId(resultSet);
++        return company;
++    }
++
++    @Override
++    public List<Company> getAllEntities() throws SQLException {
++        List<Company> companies = new ArrayList<>();
++
++        ResultSet resultSet = DBUtils.runStatementWithResultSet(QUERY_GET_ALL);
++        while (resultSet.next()) {
++            companies.add(MapUtils.getCompanyWithId(resultSet));
++        }
++
++        return companies;
++    }
++
++    @Override
++    public boolean isCompanyExists(IsExistsQuery isExistsQuery, String email, String password) throws SQLException, CouponSystemException {
++        ResultSet resultSet = DBUtils.runStatementWithResultSet(
++                 isExistsQuery.getQuery(), MapUtils.getMapEmailPassword(email,password));
++        if (resultSet == null)
++            throw new CouponSystemException(ErrorMsg.BAD_COMPANY_LOGIN);
++        return resultSet.next();
++    }
++
++    @Override
++    public int getCompanyIdByEmailPassword(String email, String password) throws SQLException {
++        ResultSet resultSet = DBUtils.runStatementWithResultSet(
++                IsExistsQuery.COMPANY_EMAIL_AND_PASSWORD.getQuery(), MapUtils.getMapEmailPassword(email,password));
++        resultSet.next();
++        return resultSet.getInt(1);
++    }
++
++    @Override
++    public boolean isCouponExists(IsExistsQuery existsQuery, int companyId, String couponTitle) throws SQLException {
++        ResultSet resultSet = DBUtils.runStatementWithResultSet(
++                IsExistsQuery.COUPON_COMPANY_TITLE.getQuery(), MapUtils.getMapIdTitle(companyId,couponTitle));
++        return resultSet.next();
++    }
++}
+Index: src/main/java/com/ar/utils/DateUtils.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/ar/utils/DateUtils.java b/src/main/java/com/ar/utils/DateUtils.java
+new file mode 100644
+--- /dev/null	(date 1623659855091)
++++ b/src/main/java/com/ar/utils/DateUtils.java	(date 1623659855091)
+@@ -0,0 +1,4 @@
++package com.ar.utils;
++
++public class DateUtils {
++}
+Index: src/main/java/com/ar/beans/Company.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/ar/beans/Company.java b/src/main/java/com/ar/beans/Company.java
+new file mode 100644
+--- /dev/null	(date 1624856027481)
++++ b/src/main/java/com/ar/beans/Company.java	(date 1624856027481)
+@@ -0,0 +1,89 @@
++package com.ar.beans;
++
++import com.ar.exceptions.CouponSystemException;
++import com.ar.exceptions.ErrorMsg;
++
++import java.util.List;
++
++public class Company {
++    private int id;
++    private String name;
++    private String email;
++    private String password;
++    private List<Coupon> coupons;
++
++    public Company(int id, String name, String email, String password) {
++        this(name, email, password);
++        this.id = id;
++        this.name = name;
++        this.email = email;
++        this.password = password;
++    }
++
++    public Company(String name, String email, String password) {
++        this.name = name;
++        this.email = email;
++        this.password = password;
++    }
++
++    public int getId() {
++        return id;
++    }
++
++    public void setId(int id) {
++//        if (this.id == 0)
++            this.id = id;
++//        else
++//            throw new CouponSystemException(ErrorMsg.COMPANY_ID_NOT_UPDATABLE);
++    }
++
++    public String getName() {
++        return name;
++    }
++
++    public void setName(String name)  {
++        this.name = name;
++    }
++
++//    public void setName(String name) throws CouponSystemException {
++//        if (this.name.isEmpty())
++//            this.name = name;
++//        else
++//            throw new CouponSystemException(ErrorMsg.COMPANY_NAME_NOT_UPDATABLE);
++//    }
++
++    public String getEmail() {
++        return email;
++    }
++
++    public void setEmail(String email) {
++        this.email = email;
++    }
++
++    public String getPassword() {
++        return password;
++    }
++
++    public void setPassword(String password) {
++        this.password = password;
++    }
++
++    public List<Coupon> getCoupons() {
++        return coupons;
++    }
++
++    public void setCoupons(List<Coupon> coupons) {
++        this.coupons = coupons;
++    }
++
++    @Override
++    public String toString() {
++        return "Company{" +
++                "id=" + id +
++                ", name='" + name + '\'' +
++                ", email='" + email + '\'' +
++                ", password='" + password + '\'' +
++//                ", coupons=" + coupons +
++                '}';
++    }
++}
+Index: src/main/java/com/ar/dao/SystemDAO.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/ar/dao/SystemDAO.java b/src/main/java/com/ar/dao/SystemDAO.java
+new file mode 100644
+--- /dev/null	(date 1624865965205)
++++ b/src/main/java/com/ar/dao/SystemDAO.java	(date 1624865965205)
+@@ -0,0 +1,15 @@
++package com.ar.dao;
++
++import com.ar.exceptions.CouponSystemException;
++
++import java.sql.SQLException;
++import  java.util.List;
++
++public interface SystemDAO<T,I> {
++    void addEntity(T t) throws SQLException;
++    void updateEntity(T t) throws SQLException;
++    void deleteEntity(I i) throws SQLException;
++    List<T> getAllEntities() throws SQLException;
++    T getOneEntity(I i) throws SQLException;
++
++}
+Index: src/main/java/com/ar/security/LoginManager.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/ar/security/LoginManager.java b/src/main/java/com/ar/security/LoginManager.java
+new file mode 100644
+--- /dev/null	(date 1625080644651)
++++ b/src/main/java/com/ar/security/LoginManager.java	(date 1625080644651)
+@@ -0,0 +1,64 @@
++package com.ar.security;
++
++import com.ar.exceptions.CouponSystemException;
++import com.ar.exceptions.ErrorMsg;
++import com.ar.facades.AdminFacade;
++import com.ar.facades.ClientFacade;
++import com.ar.facades.CompanyFacade;
++import com.ar.facades.CustomerFacade;
++
++import java.sql.SQLException;
++
++public class LoginManager {
++    private static  LoginManager instance = null;
++
++    private LoginManager(){
++
++    }
++    public static LoginManager getInstance() {
++        if (instance == null) {
++            synchronized (LoginManager.class) {
++                if (instance == null) {
++                    instance = new LoginManager();
++                }
++            }
++        }
++        return instance;
++    }
++
++    public ClientFacade login(String email, String password, ClientType clientType) throws SQLException, CouponSystemException {
++        switch (clientType) {
++            case Administrator:
++                AdminFacade adminFacade = new AdminFacade();
++                if(adminFacade.login(email,password)){
++                    return adminFacade;
++                }
++                break;
++            case Company:
++                CompanyFacade companyFacade = new CompanyFacade();
++                if(companyFacade.login(email,password)){
++                    int companyId = companyFacade.getCompanyIdByEmailAndPassword(email,password);
++                    companyFacade.setCompanyID(companyId);
++                    return companyFacade;
++                }
++                else {
++                    throw new CouponSystemException(ErrorMsg.BAD_COMPANY_LOGIN);
++                }
++
++            case Customer:
++                CustomerFacade customerFacade = new CustomerFacade();
++                if(customerFacade.login(email,password)){
++                    int customerId = customerFacade.getCustomerIdByEmailAndPassword(email,password);
++                    customerFacade.setCustomerID(customerId);
++                    return customerFacade;
++                }
++                else {
++                    throw new CouponSystemException(ErrorMsg.BAD_CUSTOMER_LOGIN);
++                }
++
++            default:
++                throw new IllegalStateException("Unexpected value: " + clientType);
++        }
++        return null;
++    }
++}
+Index: src/main/java/com/ar/utils/DBUtils.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/ar/utils/DBUtils.java b/src/main/java/com/ar/utils/DBUtils.java
+new file mode 100644
+--- /dev/null	(date 1624854366236)
++++ b/src/main/java/com/ar/utils/DBUtils.java	(date 1624854366236)
+@@ -0,0 +1,128 @@
++package com.ar.utils;
++
++import com.ar.db.ConnectionPool;
++
++import java.sql.Connection;
++import java.sql.PreparedStatement;
++import java.sql.ResultSet;
++import java.sql.SQLException;
++import java.time.LocalDate;
++import java.util.Date;
++import java.util.Map;
++
++public class DBUtils {
++    private static Connection connection;
++
++    public static final String URL = "jdbc:mysql://localhost:3306" +
++            "?createDatabaseIfNotExist=FALSE" +
++            "&useTimezone=TRUE" +
++            "&serverTimezone=UTC";
++    public static final String USER = "root";
++    public static final String PASS = "AllaRoyz61$";
++
++    public static void runStatement(String SQL_QUERY) throws SQLException {
++        Connection connection = null;
++        try {
++            //STEP 2 - Open Connection to DB
++            connection = ConnectionPool.getInstance().getConnection();
++            //STEP 3 - Run your SQL instruction
++            PreparedStatement statement = connection.prepareStatement(SQL_QUERY);
++            statement.executeUpdate();
++        } catch (Exception e) {
++            System.out.println(e.getMessage());
++        } finally {
++            //STEP 5 - Close Connection to DB
++            ConnectionPool.getInstance().restoreConnection(connection);
++        }
++    }
++
++    public static void runStatement(String SQL_QUERY, Map<Integer, Object> map) throws SQLException {
++        Connection connection = null;
++        try {
++            //STEP 2 - Open Connection to DB
++            connection = ConnectionPool.getInstance().getConnection();
++            //STEP 3 - Run your SQL instruction
++            PreparedStatement statement = connection.prepareStatement(SQL_QUERY);
++
++            for (Map.Entry<Integer, Object> entry : map.entrySet()) {
++                int key = entry.getKey();
++                Object value = entry.getValue();
++                if (value instanceof Integer) {
++                    statement.setInt(key, (int) value);
++                } else if (value instanceof String) {
++                    statement.setString(key, String.valueOf(value));
++                } else if (value instanceof Float) {
++                    statement.setFloat(key, (float) value);
++                } else if (value instanceof Double) {
++                    statement.setDouble(key, (Double) value);
++                }
++//                else if (value instanceof Hobby) {
++//                    statement.setString(key,String.valueOf(value));
++//                }
++                else if (value instanceof LocalDate) {
++                    statement.setDate(key, (java.sql.Date) value);
++                }
++                else if (value instanceof Date) {
++                    statement.setDate(key,(java.sql.Date) value);       //setObject
++                }
++            }
++
++
++            statement.executeUpdate();
++        } catch (Exception e) {
++            System.out.println(e.getMessage());
++        } finally {
++            //STEP 5 - Close Connection to DB
++            ConnectionPool.getInstance().restoreConnection(connection);
++        }
++    }
++
++    public static ResultSet runStatementWithResultSet(String SQL_QUERY) throws SQLException {
++        ResultSet resultSet = null;
++        try {
++            connection = ConnectionPool.getInstance().getConnection();
++            PreparedStatement stm = connection.prepareStatement(SQL_QUERY);
++            resultSet = stm.executeQuery();
++        } catch (Exception e) {
++            System.err.println(e.getMessage());
++        } finally {
++            ConnectionPool.getInstance().restoreConnection(connection);
++        }
++        return resultSet;
++
++    }
++
++    public static ResultSet runStatementWithResultSet(String SQL_QUERY,Map<Integer, Object> map) throws SQLException {
++
++
++        ResultSet resultSet = null;
++        try {
++            connection = ConnectionPool.getInstance().getConnection();
++            PreparedStatement stm = connection.prepareStatement(SQL_QUERY);
++            for (Map.Entry<Integer, Object> entry : map.entrySet()) {
++                int key = entry.getKey();
++                Object value = entry.getValue();
++                if (value instanceof Integer) {
++                    stm.setInt(key, (int) value);
++                } else if (value instanceof String) {
++                    stm.setString(key, String.valueOf(value));
++                } else if (value instanceof Float) {
++                    stm.setFloat(key, (float) value);
++                } else if (value instanceof Double) {
++                    stm.setDouble(key, (float) value);
++                } else if (value instanceof java.sql.Date) {
++                    stm.setDate(key, (java.sql.Date) value);
++                }
++
++            }
++            resultSet = stm.executeQuery();
++        } catch (Exception e) {
++            System.err.println(e.getMessage());
++        } finally {
++            ConnectionPool.getInstance().restoreConnection(connection);
++        }
++        return resultSet;
++
++    }
++
++}
+Index: src/main/java/com/ar/utils/PrintUtils.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/ar/utils/PrintUtils.java b/src/main/java/com/ar/utils/PrintUtils.java
+new file mode 100644
+--- /dev/null	(date 1625159093600)
++++ b/src/main/java/com/ar/utils/PrintUtils.java	(date 1625159093600)
+@@ -0,0 +1,37 @@
++package com.ar.utils;
++
++import com.ar.exceptions.ErrorMsg;
++
++import java.sql.SQLException;
++
++public  class PrintUtils {
++    private static int countTest = 1;
++
++    public static void printTestHeader(String testHeader) {
++        printLine();
++        System.out.println(testHeader);
++    }
++
++    public static void printLine() {
++        System.out.println("------------------------------------------------------------------------------------------------------------------------");
++    }
++
++    public static void printHeader(String header){
++        System.out.println();
++        printLine();
++        System.out.printf("             Test #:%d - Name: %s%n",countTest++,  header);
++        printLine();
++    }
++
++//        private static final String ENTITY_IS_EXISTS = "%s with mail %s and password %s is exists!";
++//    private static final String ENTITY_IS_NEW = "%s with mail %s and password %s is new!";
++
++    public static void printEntityExists(boolean isExists, String entity, String mail, String password){
++        System.out.printf(((isExists ? ErrorMsg.ENTITY_IS_EXISTS : ErrorMsg.ENTITY_IS_NEW).getMessage()) + "%n",
++                entity,mail,password);
++    }
++
++    public static void printSqlError(SQLException se) {
++        se.printStackTrace();
++    }
++}
+Index: src/main/java/com/ar/facades/CustomerFacade.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/ar/facades/CustomerFacade.java b/src/main/java/com/ar/facades/CustomerFacade.java
+new file mode 100644
+--- /dev/null	(date 1625116696546)
++++ b/src/main/java/com/ar/facades/CustomerFacade.java	(date 1625116696546)
+@@ -0,0 +1,81 @@
++package com.ar.facades;
++
++import com.ar.beans.Category;
++import com.ar.beans.Coupon;
++import com.ar.beans.Customer;
++import com.ar.dbdao.IsExistsQuery;
++import com.ar.exceptions.CouponSystemException;
++import com.ar.exceptions.ErrorMsg;
++import com.ar.utils.TablePrinter;
++
++import java.sql.Date;
++import java.sql.SQLException;
++import java.time.LocalDate;
++import java.util.ArrayList;
++import java.util.List;
++import java.util.Optional;
++
++public class CustomerFacade extends ClientFacade{
++
++    private int customerID;
++
++    public int getCustomerID() { return customerID; }
++
++    public void setCustomerID(int customerID) {this.customerID = customerID; }
++
++    public CustomerFacade() { super(); }
++
++    @Override
++    public boolean login(String email, String password) throws SQLException, CouponSystemException {
++        return this.customerDAO.isCustomerExists(email,password);
++    }
++
++    public int getCustomerIdByEmailAndPassword(String email, String password) throws SQLException {
++        return this.customerDAO.getCustomerIdByEmailPassword(email, password);
++    }
++
++    public Customer getCustomerDetails() throws SQLException {
++        return this.customerDAO.getOneEntity(this.customerID);
++    }
++
++    public List<Coupon> getCustomerCoupons() throws SQLException {
++        List<Coupon> customerCoupons = new ArrayList<Coupon>();
++        List<Integer> lstPurchases = this.customerCouponDAO.getCustomerPurchases(this.customerID);
++        for (Integer i: lstPurchases) {
++            customerCoupons.add(couponDAO.getOneEntity(i));
++        }
++        return customerCoupons;
++    }
++
++    public List<Coupon> getCustomerCoupons(Category category) throws SQLException {
++        List<Coupon> customerCoupons = new ArrayList<Coupon>();
++        List<Integer> lstPurchases = this.customerCouponDAO.getCustomerPurchases(this.customerID, category.value );
++        for (Integer i: lstPurchases) {
++            customerCoupons.add(couponDAO.getOneEntity(i));
++        }
++        return customerCoupons;
++    }
++
++    public void addCustomerPurchase(int couponId) throws SQLException, CouponSystemException {
++        if (customerCouponDAO.isPurchaseExists(couponId, customerID)) {
++            throw new CouponSystemException(ErrorMsg.CUSTOMER_HAS_COUPON_ALREADY);
++        }
++        Coupon coupon = couponDAO.getOneEntity(couponId);
++        if (coupon == null)
++            throw new CouponSystemException(ErrorMsg.COUPON_OUT_OF_STOCK);
++        if (coupon.getAmount() <=0)
++            throw new CouponSystemException(ErrorMsg.COUPON_OUT_OF_STOCK);
++        if (coupon.getEndDate().compareTo(Date.valueOf(LocalDate.now())) <= 0)
++            throw new CouponSystemException(ErrorMsg.COUPON_IS_EXPIRED);
++        customerCouponDAO.addCouponPurchase(couponId, this.customerID);
++
++        System.out.println();
++        System.out.println("Amount before purchase:");
++        TablePrinter.print(coupon);
++        coupon.setAmount(coupon.getAmount() - 1);
++        System.out.println("Amount after purchase:");
++        couponDAO.updateEntity(coupon);
++        TablePrinter.print(coupon);
++        System.out.println();
++    }
++}
+Index: .idea/vcs.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/vcs.xml b/.idea/vcs.xml
+new file mode 100644
+--- /dev/null	(date 1625158616617)
++++ b/.idea/vcs.xml	(date 1625158616617)
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="VcsDirectoryMappings">
++    <mapping directory="$PROJECT_DIR$" vcs="Git" />
++  </component>
++</project>
+\ No newline at end of file
+Index: src/main/java/com/ar/dbdao/CouponDBDAO.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/ar/dbdao/CouponDBDAO.java b/src/main/java/com/ar/dbdao/CouponDBDAO.java
+new file mode 100644
+--- /dev/null	(date 1625081908576)
++++ b/src/main/java/com/ar/dbdao/CouponDBDAO.java	(date 1625081908576)
+@@ -0,0 +1,191 @@
++package com.ar.dbdao;
++
++import com.ar.beans.Category;
++import com.ar.beans.Coupon;
++import com.ar.beans.Customer;
++import com.ar.dao.CouponDAO;
++import com.ar.exceptions.CouponSystemException;
++import com.ar.exceptions.ErrorMsg;
++import com.ar.utils.DBUtils;
++import com.ar.utils.MapUtils;
++
++import java.sql.Date;
++import java.sql.ResultSet;
++import java.sql.SQLException;
++import java.util.*;
++
++public class CouponDBDAO implements CouponDAO {
++
++    private static final String QUERY_INSERT = "INSERT INTO `bhp_coupon`.`coupons` " +
++            "(`company_id`, `category_id`, `title`," +
++            "`description`,`start_date`,`end_date`,`amount`,`price`,`image` ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);\n";
++
++    private static final String QUERY_UPDATE = "UPDATE `bhp_coupon`.`coupons` SET `company_id` = ?, `category_id` = ?, " +
++            "`title` = ?, `description` = ?, `start_date` = ?, `end_date` = ?, `amount` = ?" +
++            ", `price` = ?, `image` = ? WHERE (`id` = ?);";
++    private static final String QUERY_DELETE = "DELETE FROM `bhp_coupon`.`coupons` WHERE (`id` = ?);";
++    private static final String QUERY_GET_SINGLE = "SELECT * FROM `bhp_coupon`.`coupons` WHERE `id` = ?;";
++    private static final String QUERY_GET_ALL = "SELECT * FROM `bhp_coupon`.`coupons`";
++    private static final String QUERY_ADD_COUPON_PURCHASE = "INSERT INTO `bhp_coupon`.`customers_coupons` " +
++            "(`customer_id`, `coupon_id`) VALUES(?, ?);";
++    private static final String QUERY_DELETE_COUPON_PURCHASE = "DELETE FROM `bhp_coupon`.`customers_coupons` WHERE (`customer_id` = ? and `coupon_id` = ?);";
++    private static final String QUERY_DELETE_CUSTOMER_COUPONS = "DELETE FROM `bhp_coupon`.`customers_coupons` WHERE `customer_id` = ?;";
++    private static final String QUERY_DELETE_PURCHASE_BY_COMPANY = "DELETE FROM `bhp_coupon`.`customers_coupons` WHERE " +
++            "`coupon_id` IN (SELECT Id from `bhp_coupon`.`coupons` WHERE `company_id` = ?);";
++
++    private static final String QUERY_GET_PURCHASE_BY_COUPON = "SELECT * FROM `bhp_coupon`.`customers_coupons` WHERE `coupon_id` = ?;";
++
++    private static final String QUERY_GET_CUPONS_THE_CUSTOMER = "SELECT * FROM `bhp_coupon`.`coupons` WHERE " +
++            "id IN(SELECT coupon_id FROM `bhp_coupon`.`customers_coupons` WHERE `customer_id` = ?);";
++    private static final String QUERY_GET_CUPONS_THE_COMPANY = "SELECT * FROM `bhp_coupon`.`coupons` WHERE `company_id` = ?";
++    private static final String QUERY_GET_CUPONS_THE_COMPANY_CATEGORY = "SELECT * FROM `bhp_coupon`.`coupons` " +
++            "WHERE `company_id` = ? and `category_id` = ?";
++    private static final String QUERY_GET_CUPONS_THE_COMPANY_PRICE = "SELECT * FROM `bhp_coupon`.`coupons` " +
++            "WHERE `company_id` = ? and `price` <= ?";
++    private static final String QUERY_GET_PURCHASE_BY_COMPANY = "SELECT * FROM `bhp_coupon`.`customers_coupons` WHERE " +
++            "`coupon_id` IN (SELECT Id from bhp_coupon`.`coupons` WHERE `company_id` = ?;";
++    private static final String QUERY_DELETE_COUPON_PURCHASE_ALL = "DELETE FROM `bhp_coupon`.`customers_coupons` WHERE `coupon_id` = ?;";
++    private static final String QUERY_DELETE_COUPON_COMPANY = "DELETE FROM `bhp_coupon`.`coupons` WHERE `id` = ? and `company_id` = ?;";
++
++    private static final String QUERY_DELETE_CUPONS_THE_COMPANY = "DELETE FROM `bhp_coupon`.`coupons` WHERE `company_id` = ?";
++    private static final String QUERY_GET_EXPIRED_CUPONS = "SELECT * FROM `bhp_coupon`.`coupons` WHERE `end_date` < ?";
++
++    @Override
++    public void addEntity(Coupon coupon) throws SQLException {
++        DBUtils.runStatement(QUERY_INSERT, MapUtils.getMapCoupon(coupon));
++     }
++
++    @Override
++    public void updateEntity(Coupon coupon) throws SQLException {
++        DBUtils.runStatement(QUERY_UPDATE, MapUtils.getMapCouponWithId(coupon));
++     }
++
++    @Override
++    public void deleteEntity(Integer id) {
++        try {
++            DBUtils.runStatement(QUERY_DELETE, MapUtils.getMapId(id));
++        } catch (SQLException ex) {
++            ex.printStackTrace();
++        }
++    }
++
++    @Override
++    public Coupon getOneEntity(Integer id) throws SQLException {
++        Coupon coupon = null;
++        ResultSet resultSet = DBUtils.runStatementWithResultSet(QUERY_GET_SINGLE, MapUtils.getMapId(id));
++        if (resultSet.next())
++            coupon = MapUtils.getCouponWithId(resultSet);
++        return coupon;
++    }
++
++
++    @Override
++    public List<Coupon> getAllEntities() throws SQLException {
++        List<Coupon> coupons = new ArrayList<>();
++
++        ResultSet resultSet = DBUtils.runStatementWithResultSet(QUERY_GET_ALL);
++        while (resultSet.next()) {
++            coupons.add(MapUtils.getCouponWithId(resultSet));
++        }
++        return coupons;
++    }
++
++//    @Override
++//    public void addCouponPurchase(int customerID, int couponID) throws SQLException {
++//        Map<Integer, Object> map = new HashMap<>();
++//        map.put(1, customerID);
++//        map.put(2, couponID);
++//        DBUtils.runStatement(QUERY_ADD_COUPON_PURCHASE, map);
++//     }
++
++    @Override
++    public void deleteCouponPurchase(int customerID, int couponID) throws SQLException {
++        DBUtils.runStatement(QUERY_DELETE_COUPON_PURCHASE, MapUtils.getMapId(customerID));
++    }
++
++    @Override
++    public void deleteCouponsCompany(int companyID) throws SQLException {
++        DBUtils.runStatement(QUERY_DELETE_CUPONS_THE_COMPANY, MapUtils.getMapId(companyID));
++    }
++
++    @Override
++    public void deleteCouponCustomer(int customerId) throws SQLException {
++        DBUtils.runStatement(QUERY_DELETE_CUSTOMER_COUPONS, MapUtils.getMapId(customerId));
++    }
++
++    @Override
++    public void deletePurchaseCompany(int companyID) throws SQLException {
++        DBUtils.runStatement(QUERY_DELETE_PURCHASE_BY_COMPANY, MapUtils.getMapId(companyID));
++    }
++
++    @Override
++    public List<Coupon> getCouponsCustomer(int customerID) throws SQLException {
++        List<Coupon> coupons = new ArrayList<>();
++        ResultSet resultSet = DBUtils.runStatementWithResultSet(QUERY_GET_CUPONS_THE_CUSTOMER, MapUtils.getMapId(customerID));
++        while (resultSet.next()) {
++            coupons.add(MapUtils.getCouponWithId(resultSet));
++        }
++
++        return coupons;
++    }
++
++    public List<Coupon> getCouponsCompany(int companyID) throws SQLException {
++        List<Coupon> coupons = new ArrayList<>();
++        ResultSet resultSet = DBUtils.runStatementWithResultSet(QUERY_GET_CUPONS_THE_COMPANY, MapUtils.getMapId(companyID));
++        while (resultSet.next()) {
++            coupons.add(MapUtils.getCouponWithId(resultSet));
++        }
++
++        return coupons;
++    }
++
++    @Override
++    public List<Coupon> getCouponsCompany(int companyID, Category category) throws SQLException {
++        List<Coupon> coupons = new ArrayList<>();
++        ResultSet resultSet = DBUtils.runStatementWithResultSet(QUERY_GET_CUPONS_THE_COMPANY_CATEGORY,
++                MapUtils.getMapId(companyID, category.value));
++        while (resultSet.next()) {
++            coupons.add(MapUtils.getCouponWithId(resultSet));
++        }
++
++        return coupons;
++    }
++
++    @Override
++    public List<Coupon> getCouponsCompanyPrice(int companyID, double maxPrice) throws SQLException {
++        List<Coupon> coupons = new ArrayList<>();
++        Map<Integer, Object> map = new HashMap<>();
++        map.put(1, companyID);
++        map.put(2, (float) maxPrice);
++        ResultSet resultSet = DBUtils.runStatementWithResultSet(QUERY_GET_CUPONS_THE_COMPANY_PRICE, map);
++        while (resultSet.next()) {
++            coupons.add(MapUtils.getCouponWithId(resultSet));
++        }
++        return coupons;
++    }
++
++    @Override
++    public void deletePurchaseCoupon(int couponID) throws SQLException {
++        DBUtils.runStatement(QUERY_DELETE_COUPON_PURCHASE_ALL, MapUtils.getMapId(couponID));
++    }
++
++    @Override
++    public void deleteCouponCompany(int companyID, int couponID) throws SQLException {
++        DBUtils.runStatement(QUERY_DELETE_COUPON_COMPANY, MapUtils.getMapId(couponID, companyID));
++    }
++
++    @Override
++    public List<Coupon> getAllExpiredCouponsByDate(Date expiredDate) throws SQLException {
++        List<Coupon> coupons = new ArrayList<>();
++        Map<Integer, Object> map = new HashMap<>();
++        map.put(1, expiredDate);
++        try (ResultSet resultSet = DBUtils.runStatementWithResultSet(QUERY_GET_EXPIRED_CUPONS, map)) {
++            while (resultSet.next()) {
++                coupons.add(MapUtils.getCouponWithId(resultSet));
++            }
++        }
++        return coupons;
++    }
++
++
++}
+Index: src/main/java/com/ar/dao/CompanyDAO.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/ar/dao/CompanyDAO.java b/src/main/java/com/ar/dao/CompanyDAO.java
+new file mode 100644
+--- /dev/null	(date 1625077625409)
++++ b/src/main/java/com/ar/dao/CompanyDAO.java	(date 1625077625409)
+@@ -0,0 +1,22 @@
++package com.ar.dao;
++
++import com.ar.beans.Company;
++import com.ar.dbdao.IsExistsQuery;
++import com.ar.exceptions.CouponSystemException;
++
++import java.sql.SQLException;
++
++public interface CompanyDAO extends SystemDAO<Company, Integer> {
++//    void addCompany(Company company) throws SQLException;
++//    void updateCompany(Company company) throws SQLException;
++//    void deleteCompany(int id) throws SQLException;
++//
++//    Company getSingleCompany(int id) throws SQLException;
++
++    boolean isCompanyExists(IsExistsQuery existsQuery, String email, String password) throws SQLException, CouponSystemException;
++    boolean isCouponExists(IsExistsQuery existsQuery, int companyId, String couponTitle) throws SQLException;
++
++   // boolean isCompanyExists(String query, Map<Integer, Object> map) throws SQLException;
++
++    int getCompanyIdByEmailPassword(String email, String password) throws SQLException;
++}
+Index: pom.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/pom.xml b/pom.xml
+new file mode 100644
+--- /dev/null	(date 1623659217176)
++++ b/pom.xml	(date 1623659217176)
+@@ -0,0 +1,26 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project xmlns="http://maven.apache.org/POM/4.0.0"
++         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
++         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
++    <modelVersion>4.0.0</modelVersion>
++
++    <groupId>org.example</groupId>
++    <artifactId>CouponsPhase1</artifactId>
++    <version>1.0-SNAPSHOT</version>
++
++    <properties>
++        <maven.compiler.source>11</maven.compiler.source>
++        <maven.compiler.target>11</maven.compiler.target>
++    </properties>
++
++    <dependencies>
++        <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
++        <dependency>
++            <groupId>mysql</groupId>
++            <artifactId>mysql-connector-java</artifactId>
++            <version>8.0.25</version>
++        </dependency>
++
++    </dependencies>
++
++</project>
+\ No newline at end of file
+Index: src/main/java/com/ar/beans/Customer.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/ar/beans/Customer.java b/src/main/java/com/ar/beans/Customer.java
+new file mode 100644
+--- /dev/null	(date 1624856126297)
++++ b/src/main/java/com/ar/beans/Customer.java	(date 1624856126297)
+@@ -0,0 +1,90 @@
++package com.ar.beans;
++
++import com.ar.exceptions.CouponSystemException;
++import com.ar.exceptions.ErrorMsg;
++
++import java.util.List;
++
++public class Customer {
++    private int id;
++    private String firstName;
++    private String lastName;
++    private String email;
++    private String password;
++    private List<Coupon> coupons;
++
++    public Customer(Integer id, String firstName, String lastName, String email, String password) {
++        this(firstName, lastName, email, password);
++        this.id = id;
++    }
++
++    public Customer(String firstName, String lastName, String email, String password) {
++        this.firstName = firstName;
++        this.lastName = lastName;
++        this.email = email;
++        this.password = password;
++     }
++
++
++    public int getId() {
++        return id;
++    }
++
++    public void setId(int id) {
++//        if (this.id == 0)
++            this.id = id;
++//        else
++//            throw new CouponSystemException (ErrorMsg.CUSTOMER_ID_NOT_UPDATABLE);
++    }
++
++    public String getFirstName() {
++        return firstName;
++    }
++
++    public void setFirstName(String firstName) {
++        this.firstName = firstName;
++    }
++
++    public String getLastName() {
++        return lastName;
++    }
++
++    public void setLastName(String lastName) {
++        this.lastName = lastName;
++    }
++
++    public String getEmail() {
++        return email;
++    }
++
++    public void setEmail(String email) {
++        this.email = email;
++    }
++
++    public String getPassword() {
++        return password;
++    }
++
++    public void setPassword(String password) {
++        this.password = password;
++    }
++
++    public List<Coupon> getCoupons() {
++        return coupons;
++    }
++
++    public void setCoupons(List<Coupon> coupons) {
++        this.coupons = coupons;
++    }
++
++    @Override
++    public String toString() {
++        return "Customer{" +
++                "id=" + id +
++                ", firstName='" + firstName + '\'' +
++                ", lastName='" + lastName + '\'' +
++                ", email='" + email + '\'' +
++                ", password='" + password + '\'' +
++                '}';
++    }
++}
+Index: src/main/java/com/ar/security/ClientType.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/ar/security/ClientType.java b/src/main/java/com/ar/security/ClientType.java
+new file mode 100644
+--- /dev/null	(date 1624418492404)
++++ b/src/main/java/com/ar/security/ClientType.java	(date 1624418492404)
+@@ -0,0 +1,7 @@
++package com.ar.security;
++
++public enum ClientType {
++    Administrator,
++    Company,
++    Customer
++}
+Index: src/main/java/com/ar/dbdao/CustomerCouponDBDAO.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/ar/dbdao/CustomerCouponDBDAO.java b/src/main/java/com/ar/dbdao/CustomerCouponDBDAO.java
+new file mode 100644
+--- /dev/null	(date 1625031701381)
++++ b/src/main/java/com/ar/dbdao/CustomerCouponDBDAO.java	(date 1625031701381)
+@@ -0,0 +1,64 @@
++package com.ar.dbdao;
++
++import com.ar.beans.Category;
++import com.ar.beans.Coupon;
++import com.ar.dao.CustomerCouponDao;
++import com.ar.exceptions.CouponSystemException;
++import com.ar.exceptions.ErrorMsg;
++import com.ar.utils.DBUtils;
++import com.ar.utils.MapUtils;
++
++import java.sql.ResultSet;
++import java.sql.SQLException;
++import java.util.*;
++
++public class CustomerCouponDBDAO implements CustomerCouponDao {
++
++    private static final String QUERY_DELETE_PURCHASE_BY_COUPON = "DELETE FROM `bhp_coupon`.`customers_coupons` WHERE `coupon_id` = ?;";
++    private static final String QUERY_GET_PURCHASES_CUSTOMER = "SELECT coupon_id FROM `bhp_coupon`.`customers_coupons` WHERE `customer_id` = ?;";
++    private static final String QUERY_GET_PURCHASES_CUSTOMER_CATEGORY = "SELECT coupon_id FROM `bhp_coupon`.`customers_coupons` " +
++            "WHERE `customer_id` = ? and `coupon_id` in (SELECT id from `bhp_coupon`.`coupons` WHERE `category_id` = ?);";
++    private static final String QUERY_ADD_COUPON_PURCHASE = "INSERT INTO `bhp_coupon`.`customers_coupons` " +
++            "(`customer_id`, `coupon_id`) VALUES(?, ?);";
++
++
++    @Override
++    public void deleteCouponPurchase(int couponId) throws SQLException {
++        try {
++            DBUtils.runStatement(QUERY_DELETE_PURCHASE_BY_COUPON, MapUtils.getMapId(couponId));
++        } catch (SQLException ex) {
++            ex.printStackTrace();
++        }
++    }
++
++    @Override
++    public List<Integer> getCustomerPurchases(int customerId) throws SQLException {
++        List<Integer> coupons = new ArrayList<>();
++        ResultSet resultSet = DBUtils.runStatementWithResultSet(QUERY_GET_PURCHASES_CUSTOMER, MapUtils.getMapId(customerId));
++        while (resultSet.next()) {
++            coupons.add(resultSet.getInt(1));
++        }
++        return coupons;
++    }
++
++    public List<Integer> getCustomerPurchases(int customerId, int categoryId) throws SQLException {
++        List<Integer> coupons = new ArrayList<>();
++        ResultSet resultSet = DBUtils.runStatementWithResultSet(QUERY_GET_PURCHASES_CUSTOMER_CATEGORY, MapUtils.getMapId(customerId, categoryId));
++        while (resultSet.next()) {
++            coupons.add(resultSet.getInt(1));
++        }
++        return coupons;
++    }
++
++    @Override
++    public void addCouponPurchase(int couponId, int customerId) throws SQLException {
++        DBUtils.runStatement(QUERY_ADD_COUPON_PURCHASE, MapUtils.getMapId(customerId, couponId));
++    }
++
++    @Override
++    public boolean isPurchaseExists(int couponId, int customerId ) throws SQLException {
++        ResultSet resultSet = DBUtils.runStatementWithResultSet(
++                IsExistsQuery.PURCHASE_CUSTOMER_COUPON.getQuery(), MapUtils.getMapId(customerId, couponId));
++        return resultSet.next();
++    }
++}
+Index: src/main/java/com/ar/dbdao/IsExistsQuery.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/ar/dbdao/IsExistsQuery.java b/src/main/java/com/ar/dbdao/IsExistsQuery.java
+new file mode 100644
+--- /dev/null	(date 1624898731477)
++++ b/src/main/java/com/ar/dbdao/IsExistsQuery.java	(date 1624898731477)
+@@ -0,0 +1,32 @@
++package com.ar.dbdao;
++
++import com.ar.exceptions.ErrorMsg;
++
++public enum IsExistsQuery {
++    COMPANY_EMAIL_AND_PASSWORD("SELECT id FROM `bhp_coupon`.`companies` WHERE `email` = ? AND `password` = ? ;"),
++    COMPANY_EMAIL_OR_PASSWORD("SELECT id FROM `bhp_coupon`.`companies` WHERE `email` = ? OR `password` = ? ;"),
++    COMPANY_NAME_OR_EMAIL("SELECT id FROM `bhp_coupon`.`companies` WHERE `name` = ? OR `email` = ? ;"),
++    CUSTOMER_EMAIL("SELECT id FROM `bhp_coupon`.`customers` WHERE `email` = ?;"),
++    CUSTOMER_EMAIL_ID("SELECT id FROM `bhp_coupon`.`customers` WHERE `email` = ? and id <> ? ;"),
++    COUPON_COMPANY_TITLE("SELECT id FROM `bhp_coupon`.`coupons` WHERE `company_id` = ? and `title` = ? ;"),
++    CUSTOMER_EMAIL_AND_PASSWORD("SELECT id FROM `bhp_coupon`.`customers` WHERE `email` = ? AND `password` = ? ;"),
++    PURCHASE_CUSTOMER_COUPON("SELECT 1 FROM `bhp_coupon`.`customers_coupons` WHERE " +
++            "`customer_id` = ? and `coupon_id` = ?;")
++    ;
++
++    private String query;
++
++    private IsExistsQuery(String query) {
++        this.query = query;
++    }
++
++    public void setQuery(String query) {
++        this.query = query;
++    }
++
++    public String getQuery() {
++        return query;
++    }
++
++
++}
+Index: src/main/java/com/ar/dbdao/CustomerDBDAO.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/ar/dbdao/CustomerDBDAO.java b/src/main/java/com/ar/dbdao/CustomerDBDAO.java
+new file mode 100644
+--- /dev/null	(date 1624865965153)
++++ b/src/main/java/com/ar/dbdao/CustomerDBDAO.java	(date 1624865965153)
+@@ -0,0 +1,103 @@
++package com.ar.dbdao;
++
++import com.ar.beans.Company;
++import com.ar.beans.Customer;
++import com.ar.dao.CustomerDAO;
++import com.ar.exceptions.CouponSystemException;
++import com.ar.utils.DBUtils;
++import com.ar.utils.MapUtils;
++
++import java.sql.ResultSet;
++import java.sql.SQLException;
++import java.util.ArrayList;
++import java.util.HashMap;
++import java.util.List;
++import java.util.Map;
++
++public class CustomerDBDAO implements CustomerDAO {
++
++    private static final String QUERY_INSERT = "INSERT INTO `bhp_coupon`.`customers` (`first_name`, `last_Name`, `email`, `password`) VALUES (?, ?, ?, ?);\n";
++    private static final String QUERY_UPDATE = "UPDATE `bhp_coupon`.`customers` SET `first_Name` = ?, `last_Name` = ?, `email` = ?, `password` = ? WHERE `id` = ?;";
++    private static final String QUERY_DELETE = "DELETE FROM `bhp_coupon`.`customers` WHERE (`id` = ?);";
++    private static final String QUERY_GET_SINGLE = "SELECT * FROM `bhp_coupon`.`customers` WHERE (`id` = ?);";
++    private static final String QUERY_GET_ALL = "SELECT * FROM `bhp_coupon`.`customers`";
++    private static final String QUERY_CHECK_IS_EXISTS_EMAIL_PASSWORD = "SELECT id FROM `bhp_coupon`.`customers` WHERE (`email` = ? and `password` = ? );";
++    private static final String QUERY_GET_CUSTOMERS_THE_COUPON = "SELECT * FROM `bhp_coupon`.`customers` WHERE id IN " +
++            "(SELECT `customer_id` FROM `bhp_coupon`.`customers_coupons` WHERE `coupon_id` = ?);";
++
++    @Override
++    public boolean isCustomerExists(String email, String password) throws SQLException {
++        ResultSet resultSet = DBUtils.runStatementWithResultSet(QUERY_CHECK_IS_EXISTS_EMAIL_PASSWORD,
++                MapUtils.getMapEmailPassword(email,password));
++        return resultSet.next();
++    }
++
++    @Override
++    public boolean isCustomerExists(String email) throws SQLException {
++        Map<Integer, Object> map = new HashMap<>();
++        map.put(1, email);
++        ResultSet resultSet = DBUtils.runStatementWithResultSet(IsExistsQuery.CUSTOMER_EMAIL.getQuery(),map);
++        return resultSet.next();
++    }
++
++    @Override
++    public boolean isCustomerExists(String email, int id) throws SQLException {
++        Map<Integer, Object> map = new HashMap<>();
++        map.put(1, email);
++        map.put(2, id);
++        ResultSet resultSet = DBUtils.runStatementWithResultSet(IsExistsQuery.CUSTOMER_EMAIL_ID.getQuery(),map);
++        return resultSet.next();
++    }
++
++    @Override
++    public void addEntity(Customer customer) throws SQLException {
++        DBUtils.runStatement(QUERY_INSERT, MapUtils.getMapCustomer(customer));
++    }
++
++    @Override
++    public void updateEntity(Customer customer) throws SQLException {
++        DBUtils.runStatement(QUERY_UPDATE, MapUtils.getMapCustomerWithId(customer));
++    }
++
++    @Override
++    public void deleteEntity(Integer id) throws SQLException {
++        DBUtils.runStatement(QUERY_DELETE, MapUtils.getMapId(id));
++    }
++
++    @Override
++    public List<Customer> getAllEntities() throws SQLException {
++        List<Customer> customers = new ArrayList<>();
++
++        ResultSet resultSet = DBUtils.runStatementWithResultSet(QUERY_GET_ALL);
++        while (resultSet.next()) {
++            customers.add(MapUtils.getCustomerWithID(resultSet));
++        }
++        return customers;
++    }
++
++    @Override
++    public Customer getOneEntity(Integer id) throws SQLException{
++        ResultSet resultSet = DBUtils.runStatementWithResultSet(QUERY_GET_SINGLE, MapUtils.getMapId(id));
++        resultSet.next();
++        return MapUtils.getCustomerWithID(resultSet);
++    }
++
++    @Override
++    public List<Customer> getCustomersCupon(int couponID) throws SQLException {
++        List<Customer> customers = new ArrayList<>();
++        ResultSet resultSet = DBUtils.runStatementWithResultSet(QUERY_GET_CUSTOMERS_THE_COUPON, MapUtils.getMapId(couponID));
++        while (resultSet.next()) {
++            customers.add(MapUtils.getCustomerWithID(resultSet));
++        }
++
++        return customers;
++    }
++
++    @Override
++    public int getCustomerIdByEmailPassword(String email, String password) throws SQLException {
++        ResultSet resultSet = DBUtils.runStatementWithResultSet(
++                IsExistsQuery.CUSTOMER_EMAIL_AND_PASSWORD.getQuery(), MapUtils.getMapEmailPassword(email,password));
++        resultSet.next();
++        return resultSet.getInt(1);
++    }
++}

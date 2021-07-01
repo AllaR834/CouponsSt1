@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="4cd8a2b9-06b1-4031-95cd-8e296e0f65d5" name="Default Changelist" comment="Coupons System">
+      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CouponsPhase1.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ar/beans/Category.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ar/beans/Company.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ar/beans/Coupon.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ar/beans/Customer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ar/dao/CategoryDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ar/dao/CompanyDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ar/dao/CouponDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ar/dao/CustomerCouponDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ar/dao/CustomerDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ar/dao/SystemDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ar/datafactory/CompanyFactory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ar/datafactory/CouponFactory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ar/db/ConnectionPool.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ar/db/DatabaseManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ar/dbdao/CategoryDBDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ar/dbdao/CompanyDBDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ar/dbdao/CouponDBDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ar/dbdao/CustomerCouponDBDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ar/dbdao/CustomerDBDAO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ar/dbdao/IsExistsQuery.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ar/exceptions/CouponSystemException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ar/exceptions/ErrorMsg.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ar/facades/AdminFacade.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ar/facades/ClientFacade.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ar/facades/CompanyFacade.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ar/facades/CustomerFacade.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ar/job/CouponExpirationDailyJob.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ar/playground/Test.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ar/security/ClientType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ar/security/LoginManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ar/utils/ArtUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ar/utils/DBUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ar/utils/DateUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ar/utils/MapUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ar/utils/PrintUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ar/utils/TablePrinter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/ar/beans/Category.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/ar/beans/Company.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/ar/beans/Coupon.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/ar/beans/Customer.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/ar/dao/CategoryDAO.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/ar/dao/CompanyDAO.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/ar/dao/CouponDAO.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/ar/dao/CustomerCouponDao.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/ar/dao/CustomerDAO.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/ar/dao/SystemDAO.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/ar/datafactory/CompanyFactory.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/ar/datafactory/CouponFactory.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/ar/db/ConnectionPool.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/ar/db/DatabaseManager.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/ar/dbdao/CategoryDBDAO.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/ar/dbdao/CompanyDBDAO.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/ar/dbdao/CouponDBDAO.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/ar/dbdao/CustomerCouponDBDAO.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/ar/dbdao/CustomerDBDAO.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/ar/dbdao/IsExistsQuery.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/ar/exceptions/CouponSystemException.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/ar/exceptions/ErrorMsg.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/ar/facades/AdminFacade.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/ar/facades/ClientFacade.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/ar/facades/CompanyFacade.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/ar/facades/CustomerFacade.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/ar/job/CouponExpirationDailyJob.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/ar/playground/Test.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/ar/security/ClientType.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/ar/security/LoginManager$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/ar/security/LoginManager.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/ar/utils/ArtUtils.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/ar/utils/DBUtils.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/ar/utils/DateUtils.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/ar/utils/MapUtils.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/ar/utils/PrintUtils.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/ar/utils/TablePrinter.class" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Enum" />
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1tvoLe8qJFgMC6mZyKsDeYdGLAt" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
+  </component>
+  <component name="RunManager">
+    <configuration name="Test" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.ar.playground.Test" />
+      <module name="CouponsPhase1" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.ar.playground.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Test" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="4cd8a2b9-06b1-4031-95cd-8e296e0f65d5" name="Default Changelist" comment="" />
+      <created>1623658874673</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1623658874673</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Coupons System" />
+    <option name="LAST_COMMIT_MESSAGE" value="Coupons System" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.NullPointerException" package="java.lang" />
+          <option name="timeStamp" value="2" />
+        </breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/ar/security/LoginManager.java</url>
+          <line>59</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+    <watches-manager>
+      <configuration name="Application">
+        <watch expression="couponId" />
+      </configuration>
+    </watches-manager>
+  </component>
+</project>
